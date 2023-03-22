@@ -41,8 +41,8 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 
 
     @Modifying
-    @Query(value = "insert into user (name,username,email,password) values (:name,:username,:email,:password)", nativeQuery = true)
-    void save(@Param("name") String name, @Param("username") String username, @Param("email") String email, @Param("password") String password);
+    @Query(value = "insert into user (name,username,email,password,avatar) values (:name,:username,:email,:password,:avatar)", nativeQuery = true)
+    void save(@Param("name") String name, @Param("username") String username, @Param("email") String email, @Param("password") String password, @Param("avatar")String avatar);
 
 
     @Modifying

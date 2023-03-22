@@ -64,9 +64,6 @@ export class ProfileComponent implements OnInit {
     this.form.controls.email.patchValue(this.user.email);
     this.form.controls.gender.patchValue(this.user.gender);
     this.form.controls.address.patchValue(this.user.address);
-    // @ts-ignore
-    let timeDiff = Math.abs(Date.now() - new Date(this.user.dateOfBirth));
-    this.form.controls.age.patchValue(Math.floor((timeDiff / (1000 * 3600 * 24)) / 365))
     this.form.controls.dateOfBirth.patchValue(this.user.dateOfBirth);
     this.form.controls.avatar.patchValue(this.user.avatar);
   }
@@ -95,7 +92,6 @@ export class ProfileComponent implements OnInit {
     this.avatarError = '';
     // @ts-ignore
     this.userService.updateUser(this.form.value).subscribe(next => {
-      document.getElementById('dismiss').click()
       Swal.fire({
         position: 'center',
         icon: 'success',
@@ -103,6 +99,7 @@ export class ProfileComponent implements OnInit {
         showConfirmButton: false,
         timer: 2500
       })
+      document.getElementById('huy').click()
       this.share.sendClickEvent();
       this.getInfo();
     }, error => {
@@ -129,6 +126,7 @@ export class ProfileComponent implements OnInit {
         }
       }
     })
+
   }
 
   selectedImage: any = null;
@@ -149,7 +147,6 @@ export class ProfileComponent implements OnInit {
               this.user.avatar = url;
             }
             this.form.patchValue({avatar: url});
-            this.src = url;
             // console.log('link: ', this.fb);
           });
         })

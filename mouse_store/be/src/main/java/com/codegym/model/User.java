@@ -17,7 +17,7 @@ public class User {
     private String address;
     private Boolean gender;
     private String dateOfBirth;
-    private String avatar;
+    private String avatar = "https://firebasestorage.googleapis.com/v0/b/mouse-store.appspot.com/o/1676245765_235_Hinh-anh-Avatar-Trang-Dep-Cho-FB-Zalo-BI-AN.jpg?alt=media&token=31b54597-de6a-41de-8d96-a0df4ee32daf";
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 

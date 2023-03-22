@@ -46,7 +46,7 @@ public class UserService implements IUserService {
 
     @Override
     public void save(User user) {
-        iUserRepository.save(user.getName(), user.getUsername(), user.getEmail(), user.getPassword());
+        iUserRepository.save(user.getName(), user.getUsername(), user.getEmail(), user.getPassword(),user.getAvatar());
         User user1 = iUserRepository.findByUsername(user.getUsername()).orElse(null);
         for (Role x : user.getRoles()) {
             assert user1 != null;

@@ -39,7 +39,7 @@
     <ul *ngIf="isLogged == true" class="navbar-nav ms-1">
       <li class="nav-item dropdown">
         <a class="nav-link" data-bs-toggle="dropdown"
-           aria-expanded="false"  style="color: black"><img width="30" [src]="user.avatar"></a>
+           aria-expanded="false"  style="color: black"><img style="border-radius: 50%;border: 1px solid #0c63e4;margin-right: 10px" width="30" [src]="user.avatar">{{user.name}}</a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li><a (click)="checkProfile()" class="dropdown-item" >Thông tin cá nhân</a></li>
           <li><a (click)="logout()" class="dropdown-item">Đăng xuất</a></li>

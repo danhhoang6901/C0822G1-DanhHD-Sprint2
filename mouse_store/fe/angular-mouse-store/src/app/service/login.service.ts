@@ -15,7 +15,7 @@ export class LoginService {
   }
   updateUser(obj):Observable<any> {
     return this.http.post('http://localhost:8080/api/auth/update',{username: this.tokenService.getUsername(),
-      name: obj.name,phoneNumber: obj.phoneNumber,email: obj.email,age: obj.age,gender: obj.gender,
+      name: obj.name,phoneNumber: obj.phoneNumber,email: obj.email,gender: obj.gender,
       dateOfBirth: obj.dateOfBirth,avatar: obj.avatar,address: obj.address})
   }
   register(obj):Observable<any> {

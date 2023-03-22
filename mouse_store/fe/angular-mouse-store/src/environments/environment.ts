@@ -4,15 +4,15 @@
 
 export const environment = {
   production: false,
-   firebaseConfig : {
-    apiKey: "AIzaSyAYHImcrwslFu7F-UrjOw6AHFQrvTC1SU0",
-    authDomain: "c0822g1-mobile-shop-d949d.firebaseapp.com",
-    databaseURL: "https://c0822g1-mobile-shop-d949d-default-rtdb.firebaseio.com",
-    projectId: "c0822g1-mobile-shop-d949d",
-    storageBucket: "c0822g1-mobile-shop-d949d.appspot.com",
-    messagingSenderId: "59875762535",
-    appId: "1:59875762535:web:2898e8debaac4a3d078fc2",
-    measurementId: "G-B769B999WD"
+  firebaseConfig: {
+    apiKey: "AIzaSyC4oFJ3iQJZ1xCvxDBL7eohQe8YdOrmiO8",
+    databaseURL: "https://mouse-store-default-rtdb.firebaseio.com/",
+    authDomain: "mouse-store.firebaseapp.com",
+    projectId: "mouse-store",
+    storageBucket: "mouse-store.appspot.com",
+    messagingSenderId: "225830178360",
+    appId: "1:225830178360:web:9807afff5ba03074c860cd",
+    measurementId: "G-LTGKV3VBSC"
   }
 };
 

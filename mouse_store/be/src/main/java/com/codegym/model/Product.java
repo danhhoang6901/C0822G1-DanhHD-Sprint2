@@ -16,6 +16,7 @@ public class Product {
     private Double price;
     private String material;
     private String washingInstructions;
+    private boolean flagDelete = false;
 
     @ManyToOne
     @JoinColumn(name = "style_id",referencedColumnName = "id")
@@ -38,6 +39,14 @@ public class Product {
     private Category category;
 
     public Product() {
+    }
+
+    public boolean isFlagDelete() {
+        return flagDelete;
+    }
+
+    public void setFlagDelete(boolean flagDelete) {
+        this.flagDelete = flagDelete;
     }
 
     public Integer getId() {
