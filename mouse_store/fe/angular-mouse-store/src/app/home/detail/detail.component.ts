@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import {ProductService} from "../../service/product.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Product} from "../../model/product";
 import {Size} from "../../model/size";
 import {SizeService} from "../../service/size.service";
@@ -23,7 +23,7 @@ export class DetailComponent implements OnInit {
   cart: Cart = {};
   size: Size = null;
 
-  constructor(private shareService:ShareService,private token: TokenService, private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
+  constructor(private router: Router, private shareService: ShareService, private token: TokenService, private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
               private sizeService: SizeService) {
     this.activatedRoute.paramMap.subscribe(next => {
       this.id = +next.get("id")
@@ -49,40 +49,56 @@ export class DetailComponent implements OnInit {
   addToCart(ids: number, images: string, names: string, prices: number) {
     console.log(names)
     console.log(ids)
-    if (this.token.getCart() != undefined) {
-      this.carts = this.token.getCart();
-      this.cart.id = ids;
-      this.cart.name = names;
-      this.cart.image = images;
-      this.cart.price = prices;
-      if (this.token.checkExist(names)) {
-        this.token.upQuantity(ids, this.carts)
+    if (this.token.isLogger()) {
+      if (this.token.getCart() != undefined) {
+        this.carts = this.token.getCart();
+        this.cart.id = ids;
+        this.cart.name = names;
+        this.cart.image = images;
+        this.cart.price = prices;
+        if (this.token.checkExist(names)) {
+          this.token.upQuantity(ids, this.carts)
+        } else {
+          this.cart.quantity = 1;
+          this.carts.push(this.cart);
+        }
+        this.token.setCart(this.carts);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Đã thêm sản phẩm ' + this.cart.name + ' vào giỏ hàng',
+          showConfirmButton: false,
+          timer: 2500
+        })
       } else {
+        this.cart.id = ids;
+        this.cart.name = names;
+        this.cart.image = images;
+        this.cart.price = prices;
         this.cart.quantity = 1;
         this.carts.push(this.cart);
+        this.token.setCart(this.carts);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Đã thêm sản phẩm ' + this.cart.name + ' vào giỏ hàng',
+          showConfirmButton: false,
+          timer: 2500
+        })
       }
-      this.token.setCart(this.carts);
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Đã thêm sản phẩm ' + this.cart.name + ' vào giỏ hàng',
-        showConfirmButton: false,
-        timer: 2500
-      })
     } else {
-      this.cart.id = ids;
-      this.cart.name = names;
-      this.cart.image = images;
-      this.cart.price = prices;
-      this.cart.quantity = 1;
-      this.carts.push(this.cart);
-      this.token.setCart(this.carts);
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Đã thêm sản phẩm ' + this.cart.name + ' vào giỏ hàng',
-        showConfirmButton: false,
-        timer: 2500
+        title: "Bạn chưa đăng nhập!",
+        icon: "warning",
+        buttonsStyling: false,
+        confirmButtonText: "Đăng nhập!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigate(['/login'])
+        }
       })
     }
   }

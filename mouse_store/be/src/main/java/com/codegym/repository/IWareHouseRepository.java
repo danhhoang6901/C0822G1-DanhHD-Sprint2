@@ -12,10 +12,8 @@ public interface IWareHouseRepository extends JpaRepository<Warehouse, Integer> 
 
     @Transactional
     @Modifying
-    @Query(value = "update product, `size` " +
-            "set product.quantity = (product.quantity + :quantityNew), " +
-            "`size`.quantity = (`size`.quantity + :quantityNew) " +
-            "where product.id =:id " +
-            "and `size`.id =:sizeId", nativeQuery = true)
-    void wareHousing(@Param("id") Integer id, @Param("sizeId") Integer sizeId, @Param("quantityNew") int quantityNew);
+    @Query(value = "update product " +
+            "set quantity = (quantity + :quantityNew) " +
+            "where id =:id " , nativeQuery = true)
+    void wareHousing(@Param("id") Integer id,  @Param("quantityNew") int quantityNew);
 }

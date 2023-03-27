@@ -47,49 +47,31 @@ export class CartComponent implements OnInit {
   }
 
   buy() {
-    if (this.tokenService.isLogger()) {
-      if (this.length == 0) {
-        Swal.fire({
-          position: 'center',
-          icon: 'warning',
-          title: 'Bạn chưa thêm sản phẩm vào giỏ hàng ',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      } else {
-        this.length = 0
-        this.total = 0;
-        this.carts = []
-        this.quantity = 0;
-        this.tokenService.setCart(this.carts)
-        // this.shareService.sendClickEvent();
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Thanh toán thành công ',
-          showConfirmButton: false,
-          timer: 2000
-        });
 
-      }
-    } else {
+    if (this.length == 0) {
       Swal.fire({
-        title: "Bạn chưa đăng nhập!",
-        text: "Hãy đăng nhập để tiến hành thanh toán!",
-        icon: "warning",
-        buttonsStyling: false,
-        confirmButtonText: "Đăng nhập!",
-        customClass: {
-          confirmButton: "btn btn-primary"
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigate(['/login'])
-        }
-      })
+        position: 'center',
+        icon: 'warning',
+        title: 'Bạn chưa thêm sản phẩm vào giỏ hàng ',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    } else {
+      this.length = 0
+      this.total = 0;
+      this.carts = []
+      this.quantity = 0;
+      this.tokenService.setCart(this.carts)
+      // this.shareService.sendClickEvent();
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Thanh toán thành công ',
+        showConfirmButton: false,
+        timer: 2000
+      });
 
     }
-
   }
 
   upQuantity(index: number) {
@@ -111,7 +93,7 @@ export class CartComponent implements OnInit {
   }
 
   delete(index) {
-    this.carts.splice(index,1);
+    this.carts.splice(index, 1);
     this.tokenService.setCart(this.carts)
     this.loading();
   }

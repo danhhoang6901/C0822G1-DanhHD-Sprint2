@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -20,8 +21,8 @@ public class SizeRestController {
     private ISizeService sizeService;
 
     @GetMapping("")
-    public ResponseEntity<List<Size>> getAllSize(){
-        List<Size> sizes = sizeService.getAllSize();
+    public ResponseEntity<Set<Size>> getAllSize(){
+        Set<Size> sizes = sizeService.getAllSize();
         if (sizes.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

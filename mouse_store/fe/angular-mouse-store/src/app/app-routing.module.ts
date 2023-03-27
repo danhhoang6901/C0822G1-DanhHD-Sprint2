@@ -14,6 +14,7 @@ const routes: Routes = [
   },
   {
     path: "product",
+    canActivate: [EmployeeGuard],
     loadChildren: () => import("./product/product-routing.module").then(module => module.ProductRoutingModule)
   }];
 

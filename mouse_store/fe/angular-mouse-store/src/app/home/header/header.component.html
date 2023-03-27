@@ -34,15 +34,20 @@
     <i style="cursor: pointer" class="fas fa-search icon"></i>
   </span>
     </div>
-    <a style="cursor: pointer" style="color: black" routerLink="/cart"><i style="margin-right: 10px" class="fa-solid fa-cart-shopping icon"></i></a>
-    <a style="cursor: pointer" *ngIf="isLogged == false" style="color: black" routerLink="/login"><i class="fa-solid fa-user icon"></i></a>
+    <a *ngIf="role == 'ROLE_CUSTOMER' || isLogged == false" style="cursor: pointer;color: black"  routerLink="/cart"><i style="margin-right: 10px"
+                                                                          class="fa-solid fa-cart-shopping icon"></i></a>
+    <a style="cursor: pointer;color: black" *ngIf="isLogged == false" routerLink="/login"><i
+      class="fa-solid fa-user icon"></i></a>
     <ul style="cursor: pointer" *ngIf="isLogged == true" class="navbar-nav ms-1">
       <li class="nav-item dropdown">
         <a class="nav-link profile" data-bs-toggle="dropdown"
-           aria-expanded="false"  style="color: black"><img style="border-radius: 50%;border: 1px solid #0c63e4;margin-right: 10px" width="30" [src]="user.avatar">{{user.name}}</a>
+           aria-expanded="false" style="color: black"><img
+          style="border-radius: 50%;border: 1px solid #0c63e4;margin-right: 10px" width="30"
+          [src]="user.avatar">{{user.name}}</a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li><a style="cursor: pointer" (click)="checkProfile()" class="dropdown-item" >Thông tin cá nhân</a></li>
-          <li><a style="cursor: pointer" routerLink="/product" class="dropdown-item" >Quản lý sản phẩm</a></li>
+          <li><a style="cursor: pointer" (click)="checkProfile()" class="dropdown-item">Thông tin cá nhân</a></li>
+          <li><a style="cursor: pointer" *ngIf="role == 'ROLE_ADMIN' || role == 'ROLE_EMPLOYEE'" routerLink="/product"
+                 class="dropdown-item">Quản lý sản phẩm</a></li>
           <li><a (click)="logout()" class="dropdown-item">Đăng xuất</a></li>
         </ul>
       </li>

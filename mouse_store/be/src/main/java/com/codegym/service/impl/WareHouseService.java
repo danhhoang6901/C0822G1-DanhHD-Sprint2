@@ -11,7 +11,7 @@ public class WareHouseService implements IWareHouseService {
     private IWareHouseRepository wareHouseRepository;
 
     @Override
-    public void wareHousing(Integer id, Integer sizeId, int quantityNew) {
-        wareHouseRepository.wareHousing(id, sizeId, quantityNew);
+    public void wareHousing(Integer id,  int quantityNew) {
+        wareHouseRepository.wareHousing(id, quantityNew);
     }
 }

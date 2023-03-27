@@ -13,7 +13,7 @@
               [src]="product.image"
               class="img-fluid d-block mx-auto mb-3"></a>
             <h5><a [routerLink]="['/detail',product.id]" class="text-dark">{{product.name}}</a></h5>
-            <p class="small text-muted font-italic">{{product.description | slice: 0:47}}...</p>
+            <p class="small text-muted font-italic">{{product.description | slice: 0:31}}...</p>
             <ul class="list-inline small">
               <li class="list-inline-item m-0"><span class="fa fa-star checked"></span>
               </li>

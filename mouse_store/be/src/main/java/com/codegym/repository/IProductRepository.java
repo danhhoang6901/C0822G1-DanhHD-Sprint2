@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public interface IProductRepository extends JpaRepository<Product, Integer> {
@@ -39,7 +40,6 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
             "style_id, " +
             "origin_id, " +
             "trademark_id, " +
-            "size_id, " +
             "category_id) " +
             "values " +
             "(:#{#product.codeProduct}, " +
@@ -55,7 +55,14 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
             ":#{#product.style.id}, " +
             ":#{#product.origin.id}, " +
             ":#{#product.trademark.id}, " +
-            ":#{#product.sizes}, " +
-            ":#{#product.category.id})",nativeQuery = true)
+            ":#{#product.category.id})", nativeQuery = true)
     void createProduct(@Param("product") Product product);
+
+    @Query(value = "select * from product where `name` =:name ;", nativeQuery = true)
+    Product findProductByName(@Param("name") String name);
+
+    @Modifying
+    @Query(value = "insert into product_sizes(product_id,sizes_id) values (:product, :size)", nativeQuery = true)
+    void insertSize(@Param("product") int productId, @Param("size") int sizeId);
+
 }

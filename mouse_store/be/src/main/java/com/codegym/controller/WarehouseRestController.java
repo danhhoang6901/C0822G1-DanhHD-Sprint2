@@ -13,9 +13,9 @@ public class WarehouseRestController {
     @Autowired
     private IWareHouseService wareHouseService;
 
-    @PutMapping("{id}&{sizeId}&{quantityNew}")
-    public ResponseEntity<?> wareHousing(@PathVariable("id") Integer id,@PathVariable("sizeId") Integer sizeId, @PathVariable("quantityNew") int quantityNew) {
-        wareHouseService.wareHousing(id,sizeId, quantityNew);
+    @PutMapping("{id}&{quantityNew}")
+    public ResponseEntity<?> wareHousing(@PathVariable("id") Integer id, @PathVariable("quantityNew") int quantityNew) {
+        wareHouseService.wareHousing(id, quantityNew);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

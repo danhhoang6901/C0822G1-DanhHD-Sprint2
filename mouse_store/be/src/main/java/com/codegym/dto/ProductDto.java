@@ -1,10 +1,13 @@
 package com.codegym.dto;
 
-import com.codegym.model.*;
+import com.codegym.model.Category;
+import com.codegym.model.Origin;
+import com.codegym.model.Style;
+import com.codegym.model.Trademark;
 
 public class ProductDto {
     private Integer id;
-    private String codeProduct = "MS-";
+    private String codeProduct;
     private String name;
     private String image;
     private String color;
@@ -17,13 +20,12 @@ public class ProductDto {
     private Style style;
     private Origin origin;
     private Trademark trademark;
-    private Size size;
     private Category category;
 
     public ProductDto() {
     }
 
-    public ProductDto(Integer id, String codeProduct, String name, String image, String color, String description, int quantity, Double price, String material, String washingInstructions, boolean flagDelete, Style style, Origin origin, Trademark trademark, Size size, Category category) {
+    public ProductDto(Integer id, String codeProduct, String name, String image, String color, String description, int quantity, Double price, String material, String washingInstructions, boolean flagDelete, Style style, Origin origin, Trademark trademark, Category category) {
         this.id = id;
         this.codeProduct = codeProduct;
         this.name = name;
@@ -38,7 +40,6 @@ public class ProductDto {
         this.style = style;
         this.origin = origin;
         this.trademark = trademark;
-        this.size = size;
         this.category = category;
     }
 
@@ -152,14 +153,6 @@ public class ProductDto {
 
     public void setTrademark(Trademark trademark) {
         this.trademark = trademark;
-    }
-
-    public Size getSize() {
-        return size;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
     }
 
     public Category getCategory() {

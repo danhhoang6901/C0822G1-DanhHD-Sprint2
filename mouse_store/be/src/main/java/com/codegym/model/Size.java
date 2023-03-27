@@ -1,9 +1,9 @@
 package com.codegym.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Size {
@@ -11,18 +11,25 @@ public class Size {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private int quantity;
+
+//    @ManyToMany(mappedBy = "sizes")
+//    @JsonBackReference
+//    private Set<Product> products;
 
     public Size() {
     }
 
-    public int getQuantity() {
-        return quantity;
+    public Size(String name) {
+        this.name = name;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+//    public Set<Product> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(Set<Product> products) {
+//        this.products = products;
+//    }
 
     public Integer getId() {
         return id;
