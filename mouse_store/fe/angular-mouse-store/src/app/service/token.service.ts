@@ -8,7 +8,6 @@ const USERNAME = 'Username_key';
 const PHONENUMBER = 'PhoneNumber';
 const EMAIL = 'Email_key';
 const ADDRESS = 'Address_key';
-const AGE = 'Age_key';
 const GENDER = 'Gender_key';
 const DATEOFBIRTH = 'DateOfBirth_key';
 const AVATAR = 'Avatar_key';
@@ -38,7 +37,6 @@ export class TokenService {
   }
 
   public getStorage() {
-    this.setCart(this.cart);
     if (localStorage.getItem(STORAGE) == 'local' || sessionStorage.getItem(STORAGE) == 'local') {
       return localStorage.getItem(STORAGE);
     } else {

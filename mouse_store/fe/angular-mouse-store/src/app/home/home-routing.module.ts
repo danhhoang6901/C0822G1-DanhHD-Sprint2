@@ -12,7 +12,7 @@ const routes: Routes = [{
     path: "cart", component: CartComponent
   },
   {
-    path: "detail", component:DetailComponent
+    path: "detail/:id", component:DetailComponent
   }];
 
 @NgModule({

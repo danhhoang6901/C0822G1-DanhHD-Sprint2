@@ -9,6 +9,7 @@ import {LogInModule} from "./log-in/log-in.module";
 import {AngularFireStorageModule} from "@angular/fire/storage";
 import {AngularFireModule} from "@angular/fire";
 import {environment} from "../environments/environment";
+import {ProductModule} from "./product/product.module";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {environment} from "../environments/environment";
     HomeModule,
     LogInModule,
     HttpClientModule,
+    ProductModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],

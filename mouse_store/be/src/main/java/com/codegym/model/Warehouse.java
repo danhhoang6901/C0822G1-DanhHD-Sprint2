@@ -11,10 +11,22 @@ public class Warehouse {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "size_id", referencedColumnName = "id")
+    private Size size;
+
     public Warehouse() {
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
     }
 
     public Integer getId() {

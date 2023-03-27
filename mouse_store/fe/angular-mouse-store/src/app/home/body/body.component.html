@@ -3,16 +3,16 @@
     <header class="text-center mb-5">
       <h1 class="display-4 font-weight-bold">Sản phẩm mới 2023</h1>
     </header>
-    <div class="row pb-5 mb-4" >
+    <div class="row pb-5 mb-4">
 
       <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" *ngFor="let product of productList">
         <!-- Card-->
-        <div class="card rounded shadow-sm border-0 image">
+        <div style="margin-top: 20px" class="card rounded shadow-sm border-0 image">
           <div class="card-body p-4">
-            <img
+            <a [routerLink]="['/detail',product.id]"><img
               [src]="product.image"
-              class="img-fluid d-block mx-auto mb-3">
-            <h5><a routerLink="/detail" class="text-dark">{{product.name}}</a></h5>
+              class="img-fluid d-block mx-auto mb-3"></a>
+            <h5><a [routerLink]="['/detail',product.id]" class="text-dark">{{product.name}}</a></h5>
             <p class="small text-muted font-italic">{{product.description | slice: 0:47}}...</p>
             <ul class="list-inline small">
               <li class="list-inline-item m-0"><span class="fa fa-star checked"></span>
@@ -31,94 +31,5 @@
         </div>
       </div>
     </div>
-
-<!--    <h2 align="center" class="font-weight-bold mb-2">Thời trang nữ</h2>-->
-<!--    <div class="row pb-5 mb-4">-->
-<!--      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">-->
-<!--        &lt;!&ndash; Card&ndash;&gt;-->
-<!--        <div class="card rounded shadow-sm border-0 image">-->
-<!--          <div class="card-body p-4">-->
-<!--            <img-->
-<!--              src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/%C3%A1o_thun_n%E1%BB%AF-removebg-preview.png?alt=media&token=5ad8fdc4-8e73-4501-8276-59a530c53fce"-->
-<!--              class="img-fluid d-block mx-auto mb-3">-->
-<!--            <h5><a href="#" class="text-dark">Áo thun tay ngắn</a></h5>-->
-<!--            <p class="small text-muted font-italic">Áo thun tay ngắn nữ, áo phông unisex chất cotton mát-->
-<!--              mịn</p>-->
-<!--            <ul class="list-inline small">-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star unchecked"></span></li>-->
-<!--            </ul>-->
-<!--            <b>295.000₫</b>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">-->
-<!--        &lt;!&ndash; Card&ndash;&gt;-->
-<!--        <div class="card rounded shadow-sm border-0 image">-->
-<!--          <div class="card-body p-4"><img-->
-<!--            src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/qjn4026-xnh-1-removebg-preview.png?alt=media&token=0000e5e6-59f9-4c49-a0af-b0ccf5bf9bd1"-->
-<!--            class="img-fluid d-block mx-auto mb-3" style="height: 258px">-->
-<!--            <h5><a href="#" class="text-dark">Quần dài ống rộng</a></h5>-->
-<!--            <p class="small text-muted font-italic">Lorem ipsum dolor sit amet, consectetur adipisicing-->
-<!--              elit.</p>-->
-<!--            <ul class="list-inline small">-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star unchecked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star unchecked"></span></li>-->
-<!--            </ul>-->
-<!--            <b>295.000₫</b>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">-->
-<!--        &lt;!&ndash; Card&ndash;&gt;-->
-<!--        <div class="card rounded shadow-sm border-0 image">-->
-<!--          <div class="card-body p-4">-->
-<!--            <img-->
-<!--              src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/%C3%A1o_hoodie_n%E1%BB%AF-removebg-preview.png?alt=media&token=6de7d875-c679-48ca-adae-3c02a94ffda7"-->
-<!--              class="img-fluid d-block mx-auto mb-3">-->
-<!--            <h5><a href="#" class="text-dark">Áo Hoodie</a></h5>-->
-<!--            <p class="small text-muted font-italic">Lorem ipsum dolor sit amet, consectetur adipisicing-->
-<!--              elit.</p>-->
-<!--            <ul class="list-inline small">-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--            </ul>-->
-<!--            <b>295.000₫</b>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">-->
-<!--        &lt;!&ndash; Card&ndash;&gt;-->
-<!--        <div class="card rounded shadow-sm border-0 image">-->
-<!--          <div class="card-body p-4"><img-->
-<!--            src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/%C3%A1o_kho%C3%A1c_n%E1%BB%AF-removebg-preview.png?alt=media&token=a60cb968-4ad1-4593-b46a-5763949e0acd"-->
-<!--            class="img-fluid d-block mx-auto mb-3">-->
-<!--            <h5><a href="#" class="text-dark">Áo khoác</a></h5>-->
-<!--            <p class="small text-muted font-italic">Lorem ipsum dolor sit amet, consectetur adipisicing-->
-<!--              elit.</p>-->
-<!--            <ul class="list-inline small">-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star checked"></span></li>-->
-<!--              <li class="list-inline-item m-0"><span class="fa fa-star unchecked"></span></li>-->
-<!--            </ul>-->
-<!--            <b>295.000₫</b>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
 </section>

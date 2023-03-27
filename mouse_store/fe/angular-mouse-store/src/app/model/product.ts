@@ -17,7 +17,6 @@ export interface Product {
   washingInstructions?: string
   category?: Category;
   origin?: Origin;
-  size?: Size;
   style?: Style;
   trademark?: Trademark;
 }

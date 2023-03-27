@@ -4,9 +4,10 @@
 
       <div class="col-lg-5 mt-5">
         <div class="card mb-3">
-          <img class="card-img img-fluid"
-               src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/16567-clean-z3351628479742-f672d13ee8cbddd92d8accb24cd4c7b2-removebg-preview.png?alt=media&token=1bae1149-f5c7-4c99-b82b-7dcf6af70610"
-               id="product-detail">
+          <img [src]="productList.image">
+          <!--          <img class="card-img img-fluid"-->
+          <!--               src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/16567-clean-z3351628479742-f672d13ee8cbddd92d8accb24cd4c7b2-removebg-preview.png?alt=media&token=1bae1149-f5c7-4c99-b82b-7dcf6af70610"-->
+          <!--               id="product-detail">-->
         </div>
         <div class="row">
           <!--Start Controls-->
@@ -102,8 +103,8 @@
       <div class="col-lg-7 mt-5">
         <div class="card">
           <div class="card-body">
-            <h1 class="h2">Áo thun tay ngắn</h1>
-            <p class="h3 py-2">295,000đ</p>
+            <h1 class="h2">{{productList.name}}</h1>
+            <p class="h3 py-2">{{productList.price | number}}đ</p>
             <p class="py-2">
               <i class="fa fa-star text-warning"></i>
               <i class="fa fa-star text-warning"></i>
@@ -117,7 +118,7 @@
                 <h6>Mã sản phẩm:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>MS-001</strong></p>
+                <p class="text-muted"><strong>{{productList.codeProduct}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -125,19 +126,18 @@
                 <h6>Thương hiệu:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>Easy Wear</strong></p>
+                <p class="text-muted"><strong>{{productList.trademark.name}}</strong></p>
               </li>
             </ul>
 
             <h6>Mô tả:</h6>
-            <p>Áo thun The Original Vietnamese, chất liệu thun cotton 280gsm dày dặn, mát lạnh. From unisex thoải mái,
-              nam hoặc nữ đều mặc được. Bo cổ bản to dày dặn, đường may cao cấp từng chi tiết. </p>
+            <p>{{productList.description}} </p>
             <ul class="list-inline">
               <li class="list-inline-item">
                 <h6>Màu sắc:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>Trắng / Đen</strong></p>
+                <p class="text-muted"><strong>{{productList.color}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -145,7 +145,7 @@
                 <h6>Chất liệu:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>Thân: 73% Bông, 27% Polyeste/ Bo: 65% Bông, 35% Polyeste</strong></p>
+                <p class="text-muted"><strong>{{productList.material}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -153,7 +153,7 @@
                 <h6>Loại:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>Áo thun</strong></p>
+                <p class="text-muted"><strong>{{productList.category.name}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -161,38 +161,48 @@
                 <h6>Phong cách:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>Trẻ trung</strong></p>
+                <p class="text-muted"><strong>{{productList.style.name}}</strong></p>
               </li>
             </ul>
             <h6>Hướng dẫn bảo quản:</h6>
             <ul class="list-unstyled pb-3">
-              <li>Giặt ở chế độ bình thường, với đồ có màu tương tự.</li>
+              <li>{{productList.washingInstructions}}</li>
             </ul>
-
-            <form action="" method="GET">
-              <input type="hidden" name="product-title" value="Activewear">
-              <div class="row">
-                <div class="col-auto">
-                  <ul class="list-inline pb-3">
-                    <li class="list-inline-item">Size :
-                      <input type="hidden" name="product-size" id="product-size" value="S">
-                    </li>
-                    <li class="list-inline-item"><span class="btn btn-success btn-size">S</span></li>
-                    <li class="list-inline-item"><span class="btn btn-success btn-size">M</span></li>
-                    <li class="list-inline-item"><span class="btn btn-success btn-size">L</span></li>
-                    <li class="list-inline-item"><span class="btn btn-success btn-size">XL</span></li>
-                  </ul>
-                </div>
+            <div class="row">
+              <div class="col-auto">
+                <ul class="list-inline pb-3">Size:
+                  <li class="list-inline-item">
+                    <select class="form-select">
+                      <option *ngFor="let si of sizeList" [ngValue]="si">{{si.name}}</option>
+                    </select></li>
+                </ul>
               </div>
-              <div class="row pb-3">
-                <div class="col d-grid">
-                  <button type="submit" class="btn btn-success btn-lg" name="submit" value="addtocard">Thêm vào giỏ
-                    hàng
-                  </button>
-                </div>
+            </div>
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <h6>Trạng thái:</h6>
+              </li>
+              <li class="list-inline-item">
+                <p class="text-muted" *ngIf="productList.quantity == 0">
+                  <del>Còn hàng</del>
+                  <span style="color: red;font-weight: bold"> Hết hàng</span></p>
+                <p class="text-muted" *ngIf="productList.quantity != 0"><span style="font-weight: bold">Còn hàng</span>
+                </p>
+              </li>
+            </ul>
+            <div class="row pb-3">
+              <div class="col d-grid">
+                <button type="button" *ngIf="productList.quantity == 0" disabled style="display:none;"
+                        class="btn btn-success btn-lg">Thêm vào giỏ
+                  hàng
+                </button>
+                <button type="button" *ngIf="productList.quantity != 0"
+                        (click)="addToCart(productList.id,productList.image,productList.name,productList.price)"
+                        class="btn btn-success btn-lg">Thêm vào giỏ
+                  hàng
+                </button>
               </div>
-            </form>
-
+            </div>
           </div>
         </div>
       </div>

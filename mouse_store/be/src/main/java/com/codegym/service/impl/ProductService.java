@@ -4,6 +4,8 @@ import com.codegym.model.Product;
 import com.codegym.repository.IProductRepository;
 import com.codegym.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +16,22 @@ public class ProductService implements IProductService {
     private IProductRepository productRepository;
 
     @Override
-    public List<Product> getAllProduct() {
-        return productRepository.getAllProduct();
+    public List<Product> getAllProduct(String name) {
+        return productRepository.getAllProduct(name);
+    }
+
+    @Override
+    public Product findProductById(Integer id) {
+        return productRepository.findProductById(id);
+    }
+
+    @Override
+    public Page<Product> showListProduct(String search, Pageable pageable) {
+        return productRepository.showListProduct(search,pageable);
+    }
+
+    @Override
+    public void createProduct(Product product) {
+        productRepository.createProduct(product);
     }
 }

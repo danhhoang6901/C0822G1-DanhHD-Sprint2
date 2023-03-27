@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-mouse-store';
+  // tslint:disable-next-line:typedef
+  onActivate($event: any) {
+    // window.scroll(0,0);
+
+    window.scroll({
+      top: 700,
+      behavior: 'smooth'
+    });
+  }
 }

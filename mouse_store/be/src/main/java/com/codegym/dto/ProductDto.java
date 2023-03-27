@@ -1,12 +1,8 @@
-package com.codegym.model;
+package com.codegym.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.codegym.model.*;
 
-@Entity
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductDto {
     private Integer id;
     private String codeProduct = "MS-";
     private String name;
@@ -18,43 +14,32 @@ public class Product {
     private String material;
     private String washingInstructions;
     private boolean flagDelete = false;
-
-    @ManyToOne
-    @JoinColumn(name = "style_id", referencedColumnName = "id")
     private Style style;
-
-    @ManyToOne
-    @JoinColumn(name = "origin_id", referencedColumnName = "id")
     private Origin origin;
-
-    @ManyToOne
-    @JoinColumn(name = "trademark_id", referencedColumnName = "id")
     private Trademark trademark;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Size size;
     private Category category;
 
-    @ManyToMany
-    private Set<Size> sizes;
-
-    public Product() {
+    public ProductDto() {
     }
 
-    public Set<Size> getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(Set<Size> sizes) {
-        this.sizes = sizes;
-    }
-
-    public boolean isFlagDelete() {
-        return flagDelete;
-    }
-
-    public void setFlagDelete(boolean flagDelete) {
+    public ProductDto(Integer id, String codeProduct, String name, String image, String color, String description, int quantity, Double price, String material, String washingInstructions, boolean flagDelete, Style style, Origin origin, Trademark trademark, Size size, Category category) {
+        this.id = id;
+        this.codeProduct = codeProduct;
+        this.name = name;
+        this.image = image;
+        this.color = color;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.material = material;
+        this.washingInstructions = washingInstructions;
         this.flagDelete = flagDelete;
+        this.style = style;
+        this.origin = origin;
+        this.trademark = trademark;
+        this.size = size;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -133,8 +118,16 @@ public class Product {
         return washingInstructions;
     }
 
-    public void setWashingInstructions(String washingIntructions) {
-        this.washingInstructions = washingIntructions;
+    public void setWashingInstructions(String washingInstructions) {
+        this.washingInstructions = washingInstructions;
+    }
+
+    public boolean isFlagDelete() {
+        return flagDelete;
+    }
+
+    public void setFlagDelete(boolean flagDelete) {
+        this.flagDelete = flagDelete;
     }
 
     public Style getStyle() {
@@ -161,6 +154,14 @@ public class Product {
         this.trademark = trademark;
     }
 
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -168,5 +169,4 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
-
 }

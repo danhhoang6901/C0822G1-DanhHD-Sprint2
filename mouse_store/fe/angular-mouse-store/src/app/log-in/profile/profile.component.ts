@@ -171,7 +171,7 @@ export class ProfileComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         })
-        // document.getElementById('dismiss2').click()
+        document.getElementById('dismiss2').click()
       }, error => {
         console.log(error)
         Swal.fire({
@@ -193,5 +193,4 @@ export class ProfileComponent implements OnInit {
       }
     )
   }
-
 }

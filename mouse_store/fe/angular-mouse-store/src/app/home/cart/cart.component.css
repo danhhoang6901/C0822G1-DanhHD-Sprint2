@@ -31,3 +31,12 @@
     border-bottom-right-radius: 16px;
   }
 }
+
+.icon {
+  transition: transform .2s; /* Animation */
+
+}
+
+.icon:hover {
+  transform: scale(1.3);
+}

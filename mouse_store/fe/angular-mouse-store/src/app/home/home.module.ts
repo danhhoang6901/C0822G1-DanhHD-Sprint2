@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import {LogInModule} from "../log-in/log-in.module";
 import { CartComponent } from './cart/cart.component';
 import { DetailComponent } from './detail/detail.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,10 +17,11 @@ import { DetailComponent } from './detail/detail.component';
     FooterComponent,
     HeaderComponent
   ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    LogInModule
-  ]
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        LogInModule,
+        FormsModule
+    ]
 })
 export class HomeModule { }

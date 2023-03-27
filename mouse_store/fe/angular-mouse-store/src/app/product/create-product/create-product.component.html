@@ -1,0 +1,170 @@
+<!--<div class="row" style="margin: 100px">-->
+<!--  <div class="col-2"></div>-->
+<!--  <div class="col-8">-->
+<!--    <div class="container">-->
+<!--      <div class="row d-flex justify-content-center align-items-center h-100">-->
+<!--        <div class="col-xl-9">-->
+<!--          <div class="card" style="border-radius: 15px;">-->
+<!--            <div class="card-body">-->
+<!--              <h1 align="center">Thêm mới thông tin hàng hóa</h1>-->
+<!--              <form [formGroup]="commodityForm" (ngSubmit)="addCommodity()">-->
+<!--                <div class="row align-items-center pt-4 pb-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="name" style="font-weight: bold" class="mb-0">Tên hàng:<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input #checkName (change)="checkDuplicationName(checkName.value)" formControlName="name" required-->
+<!--                           id="name" placeholder="Vui lòng nhập tên hàng (*)"-->
+<!--                           type="text"-->
+<!--                           class="form-control "/>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="trademark" style="font-weight: bold" class="mb-0">Thương-->
+<!--                      hiệu:<sup style="color: red;font-size: 15px" title="Bắt buộc">*</sup>-->
+<!--                    </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <select formControlName="trademark" required id="trademark" class="form-control"-->
+<!--                            aria-label="Default select example">-->
+<!--                      <option value="">-&#45;&#45;&#45;&#45;Chọn-&#45;&#45;&#45;&#45;</option>-->
+<!--                      <option *ngFor="let trademark of trademarkList"-->
+<!--                              [ngValue]="trademark">{{trademark.name}}</option>-->
+<!--                    </select>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="price" style="font-weight: bold" class="mb-0">Giá (VNĐ):<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="price" required id="price" class="form-control" type="number"-->
+<!--                           placeholder="Vui lòng nhập giá (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="image" style="font-weight: bold" class="mb-0">Hình ảnh:<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5">-->
+<!--                    <input accept=".jpg, .png, .jpeg, .gif, .pdf" (change)="showPreview($event)" required-->
+<!--                           id="image"-->
+<!--                           class="form-control-file" type="file"/>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative;margin-left: 150px">-->
+<!--                    <input style="display: none" type="text" readonly formControlName="image" class="form-control">-->
+<!--                  </div>-->
+<!--                  <div style="margin-left: 150px" class="col-md-9 pe-5">-->
+<!--                    <img [src]="fb" style="width: 150px">-->
+<!--                  </div>-->
+
+
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="size" style="font-weight: bold" class="mb-0">Màn-->
+<!--                      hình (inch):<sup-->
+<!--                        style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="screenSize" required id="size" class="form-control" type="text"-->
+<!--                           placeholder="Vui lòng nhập kích thước màn hình (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="camera" style="font-weight: bold" class="mb-0">Camera (MP):<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="camera" required id="camera" class="form-control" type="text"-->
+<!--                           placeholder="Vui lòng nhập độ phân giải camera sau (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="selfie" style="font-weight: bold" class="mb-0">Selfie (MP):<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="selfie" required id="selfie" class="form-control" type="text"-->
+<!--                           placeholder="Vui lòng nhập độ phân giải camera trước (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="cpu" style="font-weight: bold" class="mb-0">CPU:<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="cpu" required id="cpu" class="form-control" type="text"-->
+<!--                           placeholder="Vui lòng nhập loại CPU (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="save" style="font-weight: bold" class="mb-0">Lưu trữ (GB):<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="capacity" required id="save" class="form-control" type="text"-->
+<!--                           placeholder="Vui lòng nhập dung lượng lưu trữ (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="origin" style="font-weight: bold" class="mb-0">Xuất xứ:<sup-->
+<!--                      style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="origin" required id="origin" class="form-control" type="text"-->
+<!--                           placeholder="Vui lòng nhập xuất xứ (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="guarantee" style="font-weight: bold" class="mb-0">Bảo-->
+<!--                      hành (tháng):<sup-->
+<!--                        style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5" style="position: relative">-->
+<!--                    <input formControlName="guarantee" required id="guarantee" class="form-control" type="text"-->
+<!--                           placeholder="Vui lòng nhập thời gian bảo hành (*)">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="row align-items-center py-3">-->
+<!--                  <div class="col-md-3 ps-5">-->
+<!--                    <label for="describe" style="font-weight: bold" class="mb-0">Mô tả-->
+<!--                      thêm: </label>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-9 pe-5">-->
+<!--                                        <textarea formControlName="description" id="describe" rows="3"-->
+<!--                                                  class="form-control" type="text"-->
+<!--                                                  placeholder="Nhập mô tả thêm..."></textarea>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div align="center" class="px-5 py-4">-->
+<!--                  <button type="submit" class="btn btn-outline-primary m-4 w-25">Thêm mới</button>-->
+<!--                  <button style="margin-left: 10px" type="button" class="btn btn-outline-secondary m-4 w-25"-->
+<!--                          (click)="cancel()">-->
+<!--                    Hủy-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </form>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="col-2"></div>-->
+<!--</div>-->
+<div class="pt-5">
+  <h6 class="mb-0"><a routerLink="/product" class="text-body"><i
+    class="fas fa-long-arrow-alt-left me-2"></i>Quay lại</a></h6>
+</div>
