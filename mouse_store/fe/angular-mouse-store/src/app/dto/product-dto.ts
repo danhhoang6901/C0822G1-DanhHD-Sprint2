@@ -1,10 +1,10 @@
-import {Origin} from "./origin";
-import {Category} from "./category";
-import {Style} from "./style";
-import {Trademark} from "./trademark";
-import {Image} from "./image";
+import {Category} from "../model/category";
+import {Origin} from "../model/origin";
+import {Style} from "../model/style";
+import {Trademark} from "../model/trademark";
+import {ImageDto} from "./image-dto";
 
-export interface Product {
+export interface ProductDto {
   id?: number;
   codeProduct?: string;
   name?: string;
@@ -18,5 +18,5 @@ export interface Product {
   origin?: Origin;
   style?: Style;
   trademark?: Trademark;
-  images?: Image[];
+  image?: ImageDto;
 }

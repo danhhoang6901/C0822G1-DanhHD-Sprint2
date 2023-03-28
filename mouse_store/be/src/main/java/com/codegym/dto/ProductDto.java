@@ -9,7 +9,6 @@ public class ProductDto {
     private Integer id;
     private String codeProduct;
     private String name;
-    private String image;
     private String color;
     private String description;
     private int quantity;
@@ -25,11 +24,10 @@ public class ProductDto {
     public ProductDto() {
     }
 
-    public ProductDto(Integer id, String codeProduct, String name, String image, String color, String description, int quantity, Double price, String material, String washingInstructions, boolean flagDelete, Style style, Origin origin, Trademark trademark, Category category) {
+    public ProductDto(Integer id, String codeProduct, String name,  String color, String description, int quantity, Double price, String material, String washingInstructions, boolean flagDelete, Style style, Origin origin, Trademark trademark, Category category) {
         this.id = id;
         this.codeProduct = codeProduct;
         this.name = name;
-        this.image = image;
         this.color = color;
         this.description = description;
         this.quantity = quantity;
@@ -65,14 +63,6 @@ public class ProductDto {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getColor() {

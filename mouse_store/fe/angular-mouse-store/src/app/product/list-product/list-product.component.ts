@@ -17,6 +17,8 @@ export class ListProductComponent implements OnInit {
   product: Product = null;
   nums;
   role = "none";
+  index = -1;
+  item: string;
 
   constructor(private token: TokenService, private router: Router, private title: Title, private productService: ProductService) {
   }
@@ -44,5 +46,43 @@ export class ListProductComponent implements OnInit {
         this.nums = Array.from(Array(next.totalPages).keys())
       }
     })
+  }
+
+  deleteProduct(id: number) {
+    Swal.fire({
+      title: 'Bạn có muốn xóa?',
+      text: 'Hàng hóa: ' + this.item,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productService.deleteProduct(id).subscribe(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa thành công ',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.index = -1;
+          this.ngOnInit();
+        }, error => {
+          console.log(error);
+        });
+      }
+    });
+  }
+
+  choice(id: any, name: any) {
+    this.index = id;
+    this.item = name;
+  }
+
+  cancel() {
+    this.index=-1
   }
 }

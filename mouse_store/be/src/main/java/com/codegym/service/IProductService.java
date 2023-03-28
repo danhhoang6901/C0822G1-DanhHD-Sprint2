@@ -17,4 +17,9 @@ public interface IProductService {
 
     void createProduct(Product product);
 
+    Product findById(Integer id);
+
+    void deleteProduct(Integer id);
+
+    void editProduct(Product product);
 }

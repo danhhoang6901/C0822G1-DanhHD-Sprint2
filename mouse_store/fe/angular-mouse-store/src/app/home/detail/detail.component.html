@@ -4,7 +4,7 @@
 
       <div class="col-lg-5 mt-5">
         <div class="card mb-3">
-          <img [src]="productList.image">
+          <img [src]="productList.images[0].url">
           <!--          <img class="card-img img-fluid"-->
           <!--               src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/16567-clean-z3351628479742-f672d13ee8cbddd92d8accb24cd4c7b2-removebg-preview.png?alt=media&token=1bae1149-f5c7-4c99-b82b-7dcf6af70610"-->
           <!--               id="product-detail">-->
@@ -22,69 +22,18 @@
           <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
             <!--Start Slides-->
             <div class="carousel-inner product-links-wap" role="listbox">
-
               <!--First slide-->
               <div class="carousel-item active">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-4" *ngFor="let pd of productList.images">
                     <a href="#">
-                      <img class="card-img img-fluid"
-                           src="https://firebasestorage.googleapis.com/v0/b/mouse-store.appspot.com/o/6c16d2ff949adcb475741ac64f54804a-removebg-preview.png?alt=media&token=438a0f1c-3a4b-4ff0-827b-29f49ae8617d"
+                      <img class=" ard-img img-fluid"
+                           src="{{pd.url}}"
                            alt="Product Image 1">
                     </a>
                   </div>
-                  <div class="col-4">
-                    <a href="#">
-                      <img class="card-img img-fluid"
-                           src="https://firebasestorage.googleapis.com/v0/b/mouse-store.appspot.com/o/ao-thun-nam-den-tron-co-tron-tay-ngan-cao-cap-1-removebg-preview.png?alt=media&token=964bb3cc-c4d8-4bbd-bea0-15602ab5dd7f"
-                           alt="Product Image 2">
-                    </a>
-                  </div>
-                  <div class="col-4">
-                    <a href="#">
-                      <img class="card-img img-fluid"
-                           src="https://firebasestorage.googleapis.com/v0/b/mouse-store.appspot.com/o/ao-thun-nam-trang-tron-co-tron-tay-ngan-cao-cap-removebg-preview.png?alt=media&token=76f05532-efb8-4f1a-b4c1-28b8e372755f"
-                           alt="Product Image 3">
-                    </a>
-                  </div>
                 </div>
               </div>
-              <!--/.First slide-->
-
-              <!--Second slide-->
-              <div class="carousel-item">
-                <div class="row">
-                  <div class="col-4">
-                    <a href="#">
-                      <img class="card-img img-fluid"
-                           src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/16567-clean-z3351628479742-f672d13ee8cbddd92d8accb24cd4c7b2-removebg-preview.png?alt=media&token=1bae1149-f5c7-4c99-b82b-7dcf6af70610"
-                           alt="Product Image 4">
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!--Third slide-->
-              <!--                      <div class="carousel-item">-->
-              <!--                        <div class="row">-->
-              <!--                          <div class="col-4">-->
-              <!--                            <a href="#">-->
-              <!--                              <img class="card-img img-fluid" src="assets/img/product_single_07.jpg" alt="Product Image 7">-->
-              <!--                            </a>-->
-              <!--                          </div>-->
-              <!--                          <div class="col-4">-->
-              <!--                            <a href="#">-->
-              <!--                              <img class="card-img img-fluid" src="assets/img/product_single_08.jpg" alt="Product Image 8">-->
-              <!--                            </a>-->
-              <!--                          </div>-->
-              <!--                          <div class="col-4">-->
-              <!--                            <a href="#">-->
-              <!--                              <img class="card-img img-fluid" src="assets/img/product_single_09.jpg" alt="Product Image 9">-->
-              <!--                            </a>-->
-              <!--                          </div>-->
-              <!--                        </div>-->
-              <!--                      </div>-->
-              <!--/.Third slide-->
             </div>
             <!--End Slides-->
           </div>
@@ -197,7 +146,7 @@
                   hàng
                 </button>
                 <button type="button" *ngIf="productList.quantity != 0"
-                        (click)="addToCart(productList.id,productList.image,productList.name,productList.price)"
+                        (click)="addToCart(productList.id,productList.images[0].url,productList.name,productList.price)"
                         class="btn btn-success btn-lg">Thêm vào giỏ
                   hàng
                 </button>

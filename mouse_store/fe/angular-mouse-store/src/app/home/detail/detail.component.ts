@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import {Cart} from "../../model/cart";
 import {TokenService} from "../../service/token.service";
 import {ShareService} from "../../service/share.service";
+import {Image} from "../../model/image";
 
 @Component({
   selector: 'app-detail',
@@ -22,6 +23,7 @@ export class DetailComponent implements OnInit {
   carts: Cart[] = [];
   cart: Cart = {};
   size: Size = null;
+  image: Image[] = [];
 
   constructor(private router: Router, private shareService: ShareService, private token: TokenService, private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
               private sizeService: SizeService) {
@@ -31,8 +33,10 @@ export class DetailComponent implements OnInit {
     });
     this.sizeService.getAllSize().subscribe(next => {
       this.sizeList = next;
-    })
-    console.log(this.size);
+    });
+    // this.image = this.productList.images;
+    // console.log(this.productList.images)
+    // console.log(this.size);
   }
 
   ngOnInit(): void {
@@ -42,13 +46,13 @@ export class DetailComponent implements OnInit {
   getProductById(id: any) {
     this.productService.findProductById(id).subscribe(next => {
       this.productList = next;
-      console.log(this.productList)
+      // console.log(this.productList)
     })
   }
 
   addToCart(ids: number, images: string, names: string, prices: number) {
-    console.log(names)
-    console.log(ids)
+    // console.log(names)
+    // console.log(ids)
     if (this.token.isLogger()) {
       if (this.token.getCart() != undefined) {
         this.carts = this.token.getCart();

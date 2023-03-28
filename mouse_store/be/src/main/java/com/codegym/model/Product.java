@@ -3,7 +3,6 @@ package com.codegym.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,7 +12,6 @@ public class Product {
     private Integer id;
     private String codeProduct;
     private String name;
-    private String image;
     private String color;
     private String description;
     private int quantity;
@@ -29,6 +27,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "origin_id", referencedColumnName = "id")
     private Origin origin;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    private Set<Image> images;
 
     @ManyToOne
     @JoinColumn(name = "trademark_id", referencedColumnName = "id")
@@ -46,6 +48,14 @@ public class Product {
     private Set<Size> sizes;
 
     public Product() {
+    }
+
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
 
     public Set<Size> getSizes() {
@@ -86,14 +96,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getColor() {

@@ -1,50 +1,50 @@
 import {Component, OnInit} from '@angular/core';
-import {Title} from "@angular/platform-browser";
-import {Router} from "@angular/router";
-import {ProductService} from "../../service/product.service";
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {Observable} from "rxjs";
-import {Product} from "../../model/product";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Category} from "../../model/category";
 import {Origin} from "../../model/origin";
 import {Style} from "../../model/style";
 import {Trademark} from "../../model/trademark";
-import {Size} from "../../model/size";
+import {AngularFireStorage} from "@angular/fire/storage";
+import {Title} from "@angular/platform-browser";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ProductService} from "../../service/product.service";
 import {CategoryService} from "../../service/category.service";
 import {OriginService} from "../../service/origin.service";
-import {SizeService} from "../../service/size.service";
 import {StyleService} from "../../service/style.service";
 import {TrademarkService} from "../../service/trademark.service";
+import {Product} from "../../model/product";
 import Swal from "sweetalert2";
-import {AngularFireStorage} from "@angular/fire/storage";
-import {finalize} from "rxjs/operators";
-import {Image} from "../../model/image";
-import {ImageDto} from "../../dto/image-dto";
+import {Observable} from "rxjs";
 import {ProductDto} from "../../dto/product-dto";
+import {finalize} from "rxjs/operators";
+import {ImageDto} from "../../dto/image-dto";
 
 @Component({
-  selector: 'app-create-product',
-  templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  selector: 'app-edit-product',
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.css']
 })
-export class CreateProductComponent implements OnInit {
+export class EditProductComponent implements OnInit {
   productForm: FormGroup;
-  selectedImage: any[] = [];
-  downloadURL: Observable<string> | undefined;
-  fb: string | undefined;
-  src: string | undefined;
   categoryList: Category[] = [];
   originList: Origin[] = [];
   styleList: Style[] = [];
   trademarkList: Trademark[] = [];
+  productList: Product = {};
+  selectedImage: any[] = [];
+  downloadURL: Observable<string> | undefined;
+  fb: string | undefined;
+  src: string | undefined;
   img: any[] = [];
   readFile: any[] | [];
   product: ProductDto;
 
   constructor(private formBuilder: FormBuilder, private storage: AngularFireStorage, private title: Title, private router: Router, private productService: ProductService,
               private categoryService: CategoryService, private originService: OriginService,
-              private styleService: StyleService, private trademarkService: TrademarkService) {
+              private styleService: StyleService, private trademarkService: TrademarkService,
+              private activatedRoute: ActivatedRoute) {
     this.productForm = this.formBuilder.group({
+      id: new FormControl(),
       name: new FormControl(),
       codeProduct: new FormControl(),
       image: [],
@@ -58,6 +58,14 @@ export class CreateProductComponent implements OnInit {
       style: new FormControl(""),
       trademark: new FormControl("")
     });
+    this.productService.findProductById(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(next => {
+      if (next != undefined) {
+        console.log(this.productForm.patchValue(next));
+        this.productList = next;
+        console.log(this.productList.images)
+      }
+      // console.log(next)
+    })
     this.categoryService.getAllCategory().subscribe(next => {
       this.categoryList = next;
     });
@@ -73,10 +81,32 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.setTitle("Thêm mới sản phẩm")
+    this.title.setTitle("Chỉnh sửa sản phẩm")
   }
 
-  addProduct() {
+  compareFun(item1, item2) {
+    return item1 && item2 ? item1.id === item2.id : item1 === item2;
+  }
+
+  cancel() {
+    Swal.fire({
+      title: 'Hủy bỏ',
+      html: 'Bạn có muốn hủy bỏ thêm mới thông tin sản phẩm ?',
+      icon: 'question',
+      showCancelButton: true,
+      cancelButtonText: 'Hủy',
+      showConfirmButton: true,
+      confirmButtonText: 'Có',
+      confirmButtonColor: 'red'
+    }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigateByUrl("/product");
+        }
+      }
+    );
+  }
+
+  editProduct() {
     if (this.productForm.valid) {
       this.product = this.productForm.value;
       for (let i = 0; i < this.readFile.length; i++) {
@@ -99,9 +129,7 @@ export class CreateProductComponent implements OnInit {
           });
       }
       setTimeout(() => {
-        this.productService.createProduct(this.product).subscribe(next => {
-          console.log(this.img.length)
-
+        this.productService.editProduct(this.product, this.productForm.value.id).subscribe(next => {
           if (this.img.length != 0) {
             for (let i = 0; i < this.img.length; i++) {
               const image: ImageDto = {
@@ -114,7 +142,7 @@ export class CreateProductComponent implements OnInit {
           }
           Swal.fire({
             position: 'center',
-            title: 'Thêm mới thành công',
+            title: 'Chỉnh sửa thành công',
             icon: 'success',
             showConfirmButton: false,
             timer: 2000
@@ -126,8 +154,8 @@ export class CreateProductComponent implements OnInit {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: 'Thêm mới thất bại!',
-        text: 'Thêm mới thất bại vui lòng điền đúng tất cả thông tin',
+        title: 'Chỉnh sửa thất bại!',
+        text: 'Chỉnh sửa thất bại vui lòng điền đúng tất cả thông tin',
         showConfirmButton: false,
         timer: 2000
       })
@@ -147,33 +175,13 @@ export class CreateProductComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (e: any) => {
           this.selectedImage.push(e.target.result);
-          console.log('size' + this.selectedImage);
         };
         reader.readAsDataURL(file);
-        console.log('sizezzz' + file);
       }
     } else {
       this.productForm.patchValue({image: []});
       this.selectedImage = [];
     }
-  }
-
-  cancel() {
-    Swal.fire({
-      title: 'Hủy bỏ',
-      html: 'Bạn có muốn hủy bỏ thêm mới thông tin sản phẩm ?',
-      icon: 'question',
-      showCancelButton: true,
-      cancelButtonText: 'Hủy',
-      showConfirmButton: true,
-      confirmButtonText: 'Có',
-      confirmButtonColor: 'red'
-    }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigateByUrl("/product");
-        }
-      }
-    );
   }
 
   deleteImage(i: number) {

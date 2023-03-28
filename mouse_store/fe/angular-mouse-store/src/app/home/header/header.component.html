@@ -6,35 +6,35 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div style="margin-left: 100px" class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ms-1">
-        <li class="nav-item dropdown">
-          <a class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-             aria-expanded="false">
-            Thời trang nam <i style="font-size: 10px" class="fa-solid fa-chevron-down"></i>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#aothun">Áo thun</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sơ mi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Quần dài</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Áo khoác</a>
-        </li>
-      </ul>
+<!--      <ul class="navbar-nav ms-1">-->
+<!--        <li class="nav-item dropdown">-->
+<!--          <a class="nav-link" id="navbarDropdown" role="button" data-bs-toggle="dropdown"-->
+<!--             aria-expanded="false">-->
+<!--            Thời trang nam <i style="font-size: 10px" class="fa-solid fa-chevron-down"></i>-->
+<!--          </a>-->
+<!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--            <li><a class="dropdown-item" href="#aothun">Áo thun</a></li>-->
+<!--          </ul>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="#">Sơ mi</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="#">Quần dài</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="#">Áo khoác</a>-->
+<!--        </li>-->
+<!--      </ul>-->
     </div>
-    <div style="width: 300px" class="input-group rounded">
-      <input #search type="search" class="form-control rounded" placeholder="Tìm kiếm" aria-label="Search"
-             aria-describedby="search-addon"/>
-      <span class="input-group-text border-0" id="search-addon">
-    <i style="cursor: pointer" class="fas fa-search icon"></i>
-  </span>
-    </div>
-    <a *ngIf="role == 'ROLE_CUSTOMER' || isLogged == false" style="cursor: pointer;color: black"  routerLink="/cart"><i style="margin-right: 10px"
+<!--    <div style="width: 300px" class="input-group rounded">-->
+<!--      <input #search type="search" class="form-control rounded" placeholder="Tìm kiếm" aria-label="Search"-->
+<!--             aria-describedby="search-addon"/>-->
+<!--      <span class="input-group-text border-0" id="search-addon">-->
+<!--    <i style="cursor: pointer" class="fas fa-search icon"></i>-->
+<!--  </span>-->
+<!--    </div>-->
+    <a  style="cursor: pointer;color: black"  routerLink="/cart"><i style="margin-right: 10px"
                                                                           class="fa-solid fa-cart-shopping icon"></i></a>
     <a style="cursor: pointer;color: black" *ngIf="isLogged == false" routerLink="/login"><i
       class="fa-solid fa-user icon"></i></a>

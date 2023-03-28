@@ -1,7 +1,7 @@
 <div class="vh-100">
   <div align="center" style="height: 20%;margin-top: 50px">
     <h1>Danh sách sản phẩm</h1>
-    <div style="width: 500px;float: right" class="input-group">
+    <div style="width: 500px;margin-top: 20px" class="input-group">
       <input [(ngModel)]="search" placeholder="Tìm kiếm sản phẩm ..." type="search" id="form1" class="form-control"/>
       <button (click)="showListProduct(0)" type="button" class="btn btn-info">
         <i class="fas fa-search"></i>
@@ -21,8 +21,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of productList['content'], index as i" (click)="product = item"
-          [class.table-active]="item == product">
+      <tr [class.choose]="item.id == index" *ngFor="let item of productList['content'], index as i"
+          (click)="choice(item.id,item.name)" style="cursor: pointer">
         <th scope="row">{{i + 1 + productList.number * productList.size}}</th>
         <td>{{item.codeProduct}}</td>
         <td>{{item.name}}</td>
@@ -33,6 +33,13 @@
       </tbody>
     </table>
     <button style="margin-left: 30px" class="btn btn-info" routerLink="/create">Thêm mới</button>
+    <button style="margin-left: 30px" class="btn btn-info" *ngIf="index != -1" [disabled]="index == -1" [routerLink]="['/edit',index]">Chỉnh
+      sửa
+    </button>
+    <button style="margin-left: 30px" class="btn btn-danger" *ngIf="index != -1" [disabled]="index == -1" (click)="deleteProduct(index)">
+      Xóa
+    </button>
+    <button style="margin-left: 30px" class="btn btn-secondary" *ngIf="index != -1" (click)="cancel()">Hủy</button>
     <div class="container-fluid" *ngIf="productList?.content?.length != 0">
       <nav aria-label="Page navigation example" style="float: right; margin-top: 10px">
         <ul *ngIf="productList.totalPages > 3" class="pagination">

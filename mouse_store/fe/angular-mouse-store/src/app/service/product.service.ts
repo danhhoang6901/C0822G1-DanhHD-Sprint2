@@ -10,12 +10,12 @@ export class ProductService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getAllProduct(): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8080/products")
+  getAllProduct(name): Observable<any> {
+    return this.httpClient.get<any>("http://localhost:8080/products?name=" + name)
   }
 
-  findProductById(id: number): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8080/products/" + id);
+  findProductById(id): Observable<any> {
+    return this.httpClient.get<any>("http://localhost:8080/products/find/" + id);
   }
 
   showListProduct(search: string, page: number): Observable<any> {
@@ -24,5 +24,17 @@ export class ProductService {
 
   createProduct(product): Observable<any> {
     return this.httpClient.post("http://localhost:8080/products/create", product);
+  }
+
+  createImage(image): Observable<any> {
+    return this.httpClient.post("http://localhost:8080/products/create/img", image);
+  }
+
+  deleteProduct(id: number): Observable<any> {
+    return this.httpClient.delete<any>("http://localhost:8080/products/delete/" + id);
+  }
+
+  editProduct(id, product): Observable<any> {
+    return this.httpClient.put<any>("http://localhost:8080/products/edit/" + id, product);
   }
 }

@@ -5,7 +5,7 @@
         <div class="card" style="border-radius: 15px;">
           <div class="card-body">
             <h1 align="center">Thêm mới thông tin hàng hóa</h1>
-            <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+            <form [formGroup]="productForm" (ngSubmit)="editProduct()">
               <div class="row align-items-center pt-4 pb-3">
                 <div class="col-md-3 ps-5">
                   <label for="codeProduct" style="font-weight: bold" class="mb-0">Mã sản phẩm:<sup
@@ -39,12 +39,13 @@
                   <input multiple accept=".jpg, .png, .jpeg, .gif, .pdf" (change)="showPreview($event)" required
                          id="image"
                          class="form-control-file" type="file"/>
+                  <input type="text" class="form-control" formControlName="image">
                 </div>
                 <div class="col-md-9 pe-5" style="position: relative;margin-left: 150px">
                   <input style="display: none" type="text" readonly formControlName="image" class="form-control">
                 </div>
-                <div class="d-flex justify-content-left" style="margin-left: 200px;margin-top: 10px" >
-                  <div *ngFor="let img of selectedImage,let i = index" style="margin-right: 8px">
+                <div class="d-flex justify-content-left" style="margin-left: 200px;margin-top: 10px">
+                  <div *ngFor="let img of productList.images,let i = index" style="margin-right: 8px">
                     <div style="position: relative">
                       <img class="d-block" style="height: 84px" src="{{img}}">
                       <span class="remove_img" (click)="deleteImage(i)"
@@ -112,7 +113,7 @@
                     style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>
                 </div>
                 <div class="col-md-9 pe-5" style="position: relative">
-                  <select class="form-select" id="category" formControlName="category">
+                  <select [compareWith]="compareFun" class="form-select" id="category" formControlName="category">
                     <option value="">---Chọn loại sản phẩm---</option>
                     <option *ngFor="let category of categoryList" [ngValue]="category">{{category.name}}</option>
                   </select>
@@ -124,7 +125,7 @@
                     style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>
                 </div>
                 <div class="col-md-9 pe-5" style="position: relative">
-                  <select class="form-select" id="origin" formControlName="origin">
+                  <select [compareWith]="compareFun" class="form-select" id="origin" formControlName="origin">
                     <option value="">---Chọn xuất xứ---</option>
                     <option *ngFor="let origin of originList" [ngValue]="origin">{{origin.name}}</option>
                   </select>
@@ -136,7 +137,7 @@
                     style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>
                 </div>
                 <div class="col-md-9 pe-5" style="position: relative">
-                  <select class="form-select" id="style" formControlName="style">
+                  <select [compareWith]="compareFun" class="form-select" id="style" formControlName="style">
                     <option value="">---Chọn phong cách---</option>
                     <option *ngFor="let style of styleList" [ngValue]="style">{{style.name}}</option>
                   </select>
@@ -148,7 +149,7 @@
                     style="color: red;font-size: 15px" title="Bắt buộc">*</sup> </label>
                 </div>
                 <div class="col-md-9 pe-5" style="position: relative">
-                  <select class="form-select" id="trademark" formControlName="trademark">
+                  <select [compareWith]="compareFun" class="form-select" id="trademark" formControlName="trademark">
                     <option value="">---Chọn thương hiệu---</option>
                     <option *ngFor="let trademark of trademarkList" [ngValue]="trademark">{{trademark.name}}</option>
                   </select>
