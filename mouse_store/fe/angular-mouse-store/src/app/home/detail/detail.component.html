@@ -4,7 +4,7 @@
 
       <div class="col-lg-5 mt-5">
         <div class="card mb-3">
-          <img [src]="productList.images[0].url">
+          <img [src]="detailProduct.images[0].url">
           <!--          <img class="card-img img-fluid"-->
           <!--               src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/16567-clean-z3351628479742-f672d13ee8cbddd92d8accb24cd4c7b2-removebg-preview.png?alt=media&token=1bae1149-f5c7-4c99-b82b-7dcf6af70610"-->
           <!--               id="product-detail">-->
@@ -25,7 +25,7 @@
               <!--First slide-->
               <div class="carousel-item active">
                 <div class="row">
-                  <div class="col-4" *ngFor="let pd of productList.images">
+                  <div class="col-4" *ngFor="let pd of detailProduct.images">
                     <a href="#">
                       <img class=" ard-img img-fluid"
                            src="{{pd.url}}"
@@ -52,8 +52,8 @@
       <div class="col-lg-7 mt-5">
         <div class="card">
           <div class="card-body">
-            <h1 class="h2">{{productList.name}}</h1>
-            <p class="h3 py-2">{{productList.price | number}}đ</p>
+            <h1 class="h2">{{detailProduct.name}}</h1>
+            <p class="h3 py-2">{{detailProduct.price | number}}đ</p>
             <p class="py-2">
               <i class="fa fa-star text-warning"></i>
               <i class="fa fa-star text-warning"></i>
@@ -67,7 +67,7 @@
                 <h6>Mã sản phẩm:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>{{productList.codeProduct}}</strong></p>
+                <p class="text-muted"><strong>{{detailProduct.codeProduct}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -75,18 +75,18 @@
                 <h6>Thương hiệu:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>{{productList.trademark.name}}</strong></p>
+                <p class="text-muted"><strong>{{detailProduct.trademark.name}}</strong></p>
               </li>
             </ul>
 
             <h6>Mô tả:</h6>
-            <p>{{productList.description}} </p>
+            <p>{{detailProduct.description}} </p>
             <ul class="list-inline">
               <li class="list-inline-item">
                 <h6>Màu sắc:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>{{productList.color}}</strong></p>
+                <p class="text-muted"><strong>{{detailProduct.color}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -94,7 +94,7 @@
                 <h6>Chất liệu:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>{{productList.material}}</strong></p>
+                <p class="text-muted"><strong>{{detailProduct.material}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -102,7 +102,7 @@
                 <h6>Loại:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>{{productList.category.name}}</strong></p>
+                <p class="text-muted"><strong>{{detailProduct.category.name}}</strong></p>
               </li>
             </ul>
             <ul class="list-inline">
@@ -110,12 +110,12 @@
                 <h6>Phong cách:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted"><strong>{{productList.style.name}}</strong></p>
+                <p class="text-muted"><strong>{{detailProduct.style.name}}</strong></p>
               </li>
             </ul>
             <h6>Hướng dẫn bảo quản:</h6>
             <ul class="list-unstyled pb-3">
-              <li>{{productList.washingInstructions}}</li>
+              <li>{{detailProduct.washingInstructions}}</li>
             </ul>
             <div class="row">
               <div class="col-auto">
@@ -132,21 +132,22 @@
                 <h6>Trạng thái:</h6>
               </li>
               <li class="list-inline-item">
-                <p class="text-muted" *ngIf="productList.quantity == 0">
+                <p class="text-muted" *ngIf="detailProduct.quantity == 0">
                   <del>Còn hàng</del>
                   <span style="color: red;font-weight: bold"> Hết hàng</span></p>
-                <p class="text-muted" *ngIf="productList.quantity != 0"><span style="font-weight: bold">Còn hàng</span>
+                <p class="text-muted" *ngIf="detailProduct.quantity != 0"><span
+                  style="font-weight: bold">Còn hàng</span>
                 </p>
               </li>
             </ul>
             <div class="row pb-3">
               <div class="col d-grid">
-                <button type="button" *ngIf="productList.quantity == 0" disabled style="display:none;"
+                <button type="button" *ngIf="detailProduct.quantity == 0" disabled style="display:none;"
                         class="btn btn-success btn-lg">Thêm vào giỏ
                   hàng
                 </button>
-                <button type="button" *ngIf="productList.quantity != 0"
-                        (click)="addToCart(productList.id,productList.images[0].url,productList.name,productList.price)"
+                <button type="button" *ngIf="detailProduct.quantity != 0"
+                        (click)="addToCart(detailProduct.id,quality)"
                         class="btn btn-success btn-lg">Thêm vào giỏ
                   hàng
                 </button>

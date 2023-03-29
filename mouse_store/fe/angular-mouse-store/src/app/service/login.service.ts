@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TokenService} from "./token.service";
+import {User} from "../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,11 @@ export class LoginService {
     return this.http.post('http://localhost:8080/api/auth/change-password',{username: this.tokenService.getUsername(),password: obj.password,newPassword:obj.newPassword,confirmPassword:obj.confirmPassword})
   }
 
-  profile(username):Observable<any> {
-    return this.http.get<any>('http://localhost:8080/api/auth/profile/'+username);
+  profile(username):Observable<User> {
+    return this.http.get<User>('http://localhost:8080/api/auth/profile/'+username);
+  }
+
+  profile1(id): Observable<User> {
+    return this.http.get<User>('http://localhost:8080/api/auth/profile1/' + id);
   }
 }

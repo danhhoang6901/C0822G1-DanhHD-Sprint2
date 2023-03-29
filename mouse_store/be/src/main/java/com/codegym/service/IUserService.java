@@ -44,7 +44,9 @@ public interface IUserService {
 
     Page<User> findAll(String genderSearch, String ageSearch, Pageable pageable);
 
-//    List<BillHistoryDTO> getUserHasBuy();
-
     User userLogin(String username);
+
+    User getUserById(Integer user);
+
+    User userLogin1(Integer id);
 }

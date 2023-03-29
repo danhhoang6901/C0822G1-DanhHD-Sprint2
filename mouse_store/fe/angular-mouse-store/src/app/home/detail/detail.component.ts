@@ -6,10 +6,14 @@ import {Product} from "../../model/product";
 import {Size} from "../../model/size";
 import {SizeService} from "../../service/size.service";
 import Swal from "sweetalert2";
-import {Cart} from "../../model/cart";
 import {TokenService} from "../../service/token.service";
 import {ShareService} from "../../service/share.service";
 import {Image} from "../../model/image";
+import {User} from "../../model/user";
+import {FormBuilder} from "@angular/forms";
+import {BillDetail} from "../../model/bill-detail";
+import {CartService} from "../../service/cart.service";
+import {LoginService} from "../../service/login.service";
 
 @Component({
   selector: 'app-detail',
@@ -17,80 +21,62 @@ import {Image} from "../../model/image";
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-  id;
-  productList: Product = {};
+  id: number;
+  detailProduct: Product;
+  user: User;
+  quality = 1;
+  quantity = 0;
+  cart: BillDetail[];
+  totalQuantity = 0;
+
   sizeList: Size[] = [];
-  carts: Cart[] = [];
-  cart: Cart = {};
   size: Size = null;
   image: Image[] = [];
+  isLogged = false;
 
-  constructor(private router: Router, private shareService: ShareService, private token: TokenService, private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
-              private sizeService: SizeService) {
+  constructor(private router: Router, private shareService: ShareService, private token: TokenService,
+              private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
+              private sizeService: SizeService, private formBuilder: FormBuilder,
+              private cartService: CartService,
+              private loginService: LoginService) {
     this.activatedRoute.paramMap.subscribe(next => {
-      this.id = +next.get("id")
-      this.getProductById(this.id);
+      const id = next.get("id")
+      if (id != null) {
+        this.getProductById(+id);
+      }
     });
     this.sizeService.getAllSize().subscribe(next => {
       this.sizeList = next;
     });
-    // this.image = this.productList.images;
-    // console.log(this.productList.images)
-    // console.log(this.size);
   }
 
   ngOnInit(): void {
-    this.title.setTitle("Trang chi tiết")
+    this.isLogged = this.token.isLogger()
+    this.loader()
+    this.shareService.getClickEvent().subscribe(next => {
+      this.loader()
+    })
+    this.title.setTitle("Trang chi tiết");
+    this.getProductById(this.activatedRoute.snapshot.params.id);
+    this.getOrder();
+
+  }
+
+  loader() {
+    if (this.isLogged) {
+      this.loginService.profile1(this.token.getId()).subscribe(next => this.user = next)
+    }
+    console.log(this.user)
   }
 
   getProductById(id: any) {
     this.productService.findProductById(id).subscribe(next => {
-      this.productList = next;
-      // console.log(this.productList)
+      this.detailProduct = next;
     })
   }
 
-  addToCart(ids: number, images: string, names: string, prices: number) {
-    // console.log(names)
-    // console.log(ids)
-    if (this.token.isLogger()) {
-      if (this.token.getCart() != undefined) {
-        this.carts = this.token.getCart();
-        this.cart.id = ids;
-        this.cart.name = names;
-        this.cart.image = images;
-        this.cart.price = prices;
-        if (this.token.checkExist(names)) {
-          this.token.upQuantity(ids, this.carts)
-        } else {
-          this.cart.quantity = 1;
-          this.carts.push(this.cart);
-        }
-        this.token.setCart(this.carts);
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Đã thêm sản phẩm ' + this.cart.name + ' vào giỏ hàng',
-          showConfirmButton: false,
-          timer: 2500
-        })
-      } else {
-        this.cart.id = ids;
-        this.cart.name = names;
-        this.cart.image = images;
-        this.cart.price = prices;
-        this.cart.quantity = 1;
-        this.carts.push(this.cart);
-        this.token.setCart(this.carts);
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Đã thêm sản phẩm ' + this.cart.name + ' vào giỏ hàng',
-          showConfirmButton: false,
-          timer: 2500
-        })
-      }
-    } else {
+  addToCart(id: number, quantity: number) {
+    if (!this.isLogged) {
       Swal.fire({
         title: "Bạn chưa đăng nhập!",
         icon: "warning",
@@ -105,5 +91,29 @@ export class DetailComponent implements OnInit {
         }
       })
     }
+    this.cartService.addBill2(this.user?.id, quantity, this.detailProduct.id).subscribe(next => {
+      console.log(this.user.id);
+      this.totalQuantity = quantity + this.quantity;
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Đã thêm sản phẩm ' + this.detailProduct.name + ' vào giỏ hàng',
+        showConfirmButton: false,
+        timer: 2500
+      })
+    }, error => {
+      console.log(error)
+    })
   }
+
+  getOrder() {
+    this.cartService.getCart(this.user?.id).subscribe(data => {
+      this.cart = data;
+      for (let i = 0; i < data.length; i++) {
+        this.quantity += this.cart[i].quantity;
+      }
+      console.log('số lượng detail' + this.quantity);
+    });
+  }
+
 }

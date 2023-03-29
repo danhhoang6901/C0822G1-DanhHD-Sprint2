@@ -3,20 +3,29 @@ package com.codegym.model;
 import javax.persistence.*;
 
 @Entity
-public class BillHistory {
+public class BillDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "bill_id",referencedColumnName = "id")
+    @JoinColumn(name = "bill_id", referencedColumnName = "id")
     private Bill bill;
 
     @ManyToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id")
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    public BillHistory() {
+    public BillDetail() {
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Integer getId() {

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Cart} from "../model/cart";
+import {Bill} from "../model/bill";
 
 const TOKEN = 'Token_key';
 const ID = 'Id_key';
@@ -20,7 +20,7 @@ const CART = 'Cart_key';
 })
 export class TokenService {
   json = '';
-  cart: Cart[];
+  cart: Bill[];
 
   constructor() {
   }
@@ -44,30 +44,30 @@ export class TokenService {
     }
   }
 
-  public setCart(cart: Cart[]) {
+  public setCart(cart: Bill[]) {
     sessionStorage.removeItem(CART);
     sessionStorage.setItem(CART, JSON.stringify(cart));
   }
 
-  public upQuantity(id: number, carts: Cart[]) {
-    for (let i = 0; i < carts.length; i++) {
-      if (carts[i].id == id) {
-        carts[i].quantity += 1;
-        break
-      }
-    }
-  }
+  // public upQuantity(id: number, carts: Bill[]) {
+  //   for (let i = 0; i < carts.length; i++) {
+  //     if (carts[i].id == id) {
+  //       carts[i].quantity += 1;
+  //       break
+  //     }
+  //   }
+  // }
 
-  public checkExist(name: string) {
-    console.log(name)
-    // let cart = this.getCart();
-    for (let i = 0; i < this.getCart().length; i++) {
-      if (this.getCart()[i].name == name) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // public checkExist(name: string) {
+  //   console.log(name)
+  //   // let cart = this.getCart();
+  //   for (let i = 0; i < this.getCart().length; i++) {
+  //     if (this.getCart()[i].name == name) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   public getCart() {
     const carts = sessionStorage.getItem(CART);

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4">
       <div class="profile-img">
-        <img src="{{user.avatar}}" alt="" style="width: 250px;height: 250px"/>
+        <img src="{{user?.avatar}}" alt="" style="width: 250px;height: 250px"/>
       </div>
     </div>
     <div class="col-md-6">
@@ -46,7 +46,7 @@
               <label>Họ Và Tên</label>
             </div>
             <div class="col-md-6">
-              <p>{{user.name}}</p>
+              <p>{{user?.name}}</p>
             </div>
           </div>
           <div class="row">
@@ -54,7 +54,7 @@
               <label>Email</label>
             </div>
             <div class="col-md-6">
-              <p>{{user.email}}</p>
+              <p>{{user?.email}}</p>
             </div>
           </div>
           <div class="row">
@@ -62,7 +62,7 @@
               <label>Số Điện Thoại</label>
             </div>
             <div class="col-md-6">
-              <p>{{user.phoneNumber}}</p>
+              <p>{{user?.phoneNumber}}</p>
             </div>
           </div>
           <div class="row">
@@ -70,7 +70,7 @@
               <label>Địa Chỉ</label>
             </div>
             <div class="col-md-6">
-              <p>{{user.address}}</p>
+              <p>{{user?.address}}</p>
             </div>
           </div>
           <div class="row">
@@ -78,7 +78,7 @@
               <label>Ngày Sinh</label>
             </div>
             <div class="col-md-6">
-              <p>{{user.dateOfBirth | date: 'dd/MM/yyyy'}}</p>
+              <p>{{user?.dateOfBirth | date: 'dd/MM/yyyy'}}</p>
             </div>
           </div>
           <div class="row">
@@ -86,8 +86,8 @@
               <label>Giới Tính</label>
             </div>
             <div class="col-md-6">
-              <p *ngIf="user.gender == true">Nam</p>
-              <p *ngIf="user.gender == false">Nữ</p>
+              <p *ngIf="user?.gender == true">Nam</p>
+              <p *ngIf="user?.gender == false">Nữ</p>
             </div>
           </div>
         </div>
@@ -159,7 +159,7 @@
               <label class="hoverable" for="fileInput">
                 <input style="display:none;" formControlName="avatar"> <br> <br>
                 <input accept=".jpg, .png, .jpeg, .gif, .pdf" id="fileInput" type="file" (change)="showPreview($event)">
-                <img style="width: 150px" [src]="user.avatar">
+                <img style="width: 150px" [src]="user?.avatar">
                 <div style="margin-top: 30px" class="hover-text">Chọn ảnh</div>
                 <div class="background"></div>
                 <span class="text-danger">{{avatarError}}</span>

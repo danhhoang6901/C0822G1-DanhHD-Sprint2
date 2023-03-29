@@ -46,7 +46,7 @@ public class UserService implements IUserService {
 
     @Override
     public void save(User user) {
-        iUserRepository.save(user.getName(), user.getUsername(), user.getEmail(), user.getPassword(),user.getAvatar());
+        iUserRepository.save(user.getName(), user.getUsername(), user.getEmail(), user.getPassword(), user.getAvatar());
         User user1 = iUserRepository.findByUsername(user.getUsername()).orElse(null);
         for (Role x : user.getRoles()) {
             assert user1 != null;
@@ -144,6 +144,16 @@ public class UserService implements IUserService {
     @Override
     public User userLogin(String username) {
         return iUserRepository.userLogin(username);
+    }
+
+    @Override
+    public User getUserById(Integer user) {
+        return userRepository.findById(user).orElse(null);
+    }
+
+    @Override
+    public User userLogin1(Integer id) {
+        return iUserRepository.findById(id).orElse(null);
     }
 }
 

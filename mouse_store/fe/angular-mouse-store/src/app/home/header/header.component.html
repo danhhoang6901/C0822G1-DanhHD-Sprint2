@@ -43,7 +43,7 @@
         <a class="nav-link profile" data-bs-toggle="dropdown"
            aria-expanded="false" style="color: black"><img
           style="border-radius: 50%;border: 1px solid #0c63e4;margin-right: 10px" width="30"
-          [src]="user.avatar">{{user.name}}</a>
+          [src]="user?.avatar">{{user?.name}}</a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li><a style="cursor: pointer" (click)="checkProfile()" class="dropdown-item">Thông tin cá nhân</a></li>
           <li><a style="cursor: pointer" *ngIf="role == 'ROLE_ADMIN' || role == 'ROLE_EMPLOYEE'" routerLink="/product"

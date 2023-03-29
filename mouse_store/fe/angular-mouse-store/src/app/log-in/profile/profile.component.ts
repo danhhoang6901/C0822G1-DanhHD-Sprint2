@@ -59,13 +59,13 @@ export class ProfileComponent implements OnInit {
   }
 
   getValue() {
-    this.form.controls.name.patchValue(this.user.name);
-    this.form.controls.phoneNumber.patchValue(this.user.phoneNumber);
-    this.form.controls.email.patchValue(this.user.email);
-    this.form.controls.gender.patchValue(this.user.gender);
-    this.form.controls.address.patchValue(this.user.address);
-    this.form.controls.dateOfBirth.patchValue(this.user.dateOfBirth);
-    this.form.controls.avatar.patchValue(this.user.avatar);
+    this.form.controls.name.patchValue(this.user?.name);
+    this.form.controls.phoneNumber.patchValue(this.user?.phoneNumber);
+    this.form.controls.email.patchValue(this.user?.email);
+    this.form.controls.gender.patchValue(this.user?.gender);
+    this.form.controls.address.patchValue(this.user?.address);
+    this.form.controls.dateOfBirth.patchValue(this.user?.dateOfBirth);
+    this.form.controls.avatar.patchValue(this.user?.avatar);
   }
 
 

@@ -1,22 +1,46 @@
 package com.codegym.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String buyDate;
-    private String detail;
-    private int quantity;
-    private String paymentMethod;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @OneToOne
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    @JsonBackReference
+    private Payment payment;
+
+    @OneToMany(mappedBy = "bill")
+    @JsonBackReference
+    private Set<BillDetail> billDetails;
+
     public Bill() {
+    }
+
+    public Set<BillDetail> getBillDetails() {
+        return billDetails;
+    }
+
+    public void setBillDetails(Set<BillDetail> billDetails) {
+        this.billDetails = billDetails;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     public Integer getId() {
@@ -25,38 +49,6 @@ public class Bill {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getBuyDate() {
-        return buyDate;
-    }
-
-    public void setBuyDate(String buyDate) {
-        this.buyDate = buyDate;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
     }
 
     public User getUser() {

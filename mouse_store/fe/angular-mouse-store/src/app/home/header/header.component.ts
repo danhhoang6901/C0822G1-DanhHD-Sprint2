@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loader();
+    this.isLogged = this.token.isLogger()
+
     this.share.getClickEvent().subscribe(() => {
       this.loader();
     })
@@ -29,9 +31,9 @@ export class HeaderComponent implements OnInit {
   loader() {
     this.isLogged = this.token.isLogger()
     if (this.isLogged) {
-      this.login.profile(this.token.getUsername()).subscribe(next => {
+      this.login.profile1(this.token.getId()).subscribe(next => {
         this.user = next;
-        this.name = this.user.name;
+        this.name = this.user?.name;
       })
       this.role = this.token.getRole();
     }
