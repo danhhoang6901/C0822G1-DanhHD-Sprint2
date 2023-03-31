@@ -146,7 +146,7 @@
                         class="btn btn-success btn-lg">Thêm vào giỏ
                   hàng
                 </button>
-                <button type="button" *ngIf="detailProduct.quantity != 0"
+                <button type="button" *ngIf="detailProduct.quantity != 0 && role == 'ROLE_CUSTOMER'|| isLogged == false"
                         (click)="addToCart(detailProduct.id,quality)"
                         class="btn btn-success btn-lg">Thêm vào giỏ
                   hàng

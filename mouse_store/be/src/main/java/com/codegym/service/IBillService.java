@@ -13,4 +13,10 @@ public interface IBillService {
     void addBill(Bill bill1);
 
     void addBillDetail(BillDetail billDetail);
+
+    BillDetail getBillDetail(Integer id);
+
+    BillDetail findById(Integer id);
+
+    void deleteProducInCart(Integer id);
 }

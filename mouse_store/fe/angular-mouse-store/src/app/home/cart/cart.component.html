@@ -5,15 +5,16 @@
         <div class="card card-registration card-registration-2" style="border-radius: 15px;">
           <div class="card-body p-0">
             <div class="row g-0">
-              <div *ngIf="cart?.length != 0" class="col-lg-8">
-                <div  class="p-5">
+              <div *ngIf="totalPrice != 0" class="col-lg-8">
+                <div class="p-5">
                   <div class="d-flex justify-content-between align-items-center mb-5">
                     <h1 class="fw-bold mb-0 text-black">Giỏ hàng</h1>
                     <h6 class="mb-0 text-muted">Số lượng: {{totalQuantity}}</h6>
                   </div>
                   <hr class="my-4">
 
-                  <div *ngFor="let c of cart;index as i" class="row mb-4 d-flex justify-content-between align-items-center">
+                  <div *ngFor="let c of cart;index as i"
+                       class="row mb-4 d-flex justify-content-between align-items-center">
                     <div class="col-md-2 col-lg-2 col-xl-2">
                       <img
                         [src]="c.product.images[0].url"
@@ -23,16 +24,15 @@
                       <h6 class="text-black mb-0">{{c.product.name}}</h6>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                      <button class="btn btn-link px-2"
-                              >
+                      <button (click)="minus(c.id)" class="btn btn-link px-2">
                         <i class="fas fa-minus"></i>
                       </button>
 
-                      <input [value]="c.quantity" readonly min="0" name="quantity" type="number"
-                             class="form-control form-control-sm"/>
+                      <span style="text-align: center" id="quantity{{c.id}}" readonly
+                            class="form-control form-control-sm">{{c.quantity}}</span>
 
-                      <button class="btn btn-link px-2"
-                             >
+                      <button (click)="plus(c.id)" class="btn btn-link px-2"
+                      >
                         <i class="fas fa-plus"></i>
                       </button>
                     </div>
@@ -40,12 +40,13 @@
                       <h6 class="mb-0">{{c.product.price | number}}₫</h6>
                     </div>
                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                      <a style="cursor: pointer" class="text-muted"><i  class="fas fa-times icon"></i></a>
+                      <a (click)="deleteProductInCart(c.id,c.product.name)" style="cursor: pointer"
+                         class="text-muted"><i class="fas fa-times icon"></i></a>
                     </div>
                   </div>
                 </div>
               </div>
-              <div align="center" *ngIf="cart?.length == 0" class="col-lg-8">
+              <div align="center" *ngIf="totalPrice == 0" class="col-lg-8">
                 <img src="https://pwa-wap.scdn.vn/static/media/cart-empty.e2664e0f.svg">
                 <h3 style="color: red">Giỏ hàng trống</h3>
               </div>
@@ -61,8 +62,8 @@
 
                   <div class="mb-5">
                     <div class="form-outline">
-                      <input type="text" id="form3Examplea2" class="form-control form-control-lg"/>
-                      <label class="form-label" for="form3Examplea2">Nhập mã giảm giá</label>
+                      <input id="note" type="text" class="form-control form-control-lg"/>
+                      <label class="form-label" for="note">Nhập mã giảm giá</label>
                     </div>
                   </div>
 
@@ -76,9 +77,7 @@
                     <p class="text-uppercase"></p>
                     <p style="float: right">(Đã bao gồm VAT nếu có)</p>
                   </div>
-                  <button (click)="buy()"  class="btn btn-dark btn-block btn-lg"
-                          data-mdb-ripple-color="dark">Thanh toán
-                  </button>
+                  <div id="myPaypalButtons"></div>
                 </div>
               </div>
             </div>

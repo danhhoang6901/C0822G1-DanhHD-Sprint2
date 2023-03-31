@@ -30,4 +30,20 @@ export class CartService {
     }
     return this.httpClient.post<any>("http://localhost:8080/bill/addBill", dto);
   }
+
+  minusQuantity(id): Observable<any> {
+    return this.httpClient.get<any>("http://localhost:8080/bill/minus/" + id);
+  }
+
+  plusQuantity(id): Observable<any> {
+    return this.httpClient.get<any>("http://localhost:8080/bill/plus/" + id);
+  }
+
+  deleteProductInCart(id): Observable<any> {
+    return this.httpClient.delete<any>("http://localhost:8080/bill/delete/" + id);
+  }
+
+  payment(id, note: string): Observable<any> {
+    return this.httpClient.get<any>("http://localhost:8080/bill/payment/" + id + "?note=" + note);
+  }
 }

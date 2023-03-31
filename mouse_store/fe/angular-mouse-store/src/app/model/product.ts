@@ -18,5 +18,5 @@ export interface Product {
   origin?: Origin;
   style?: Style;
   trademark?: Trademark;
-  images: Image[];
+  images?: Image[];
 }

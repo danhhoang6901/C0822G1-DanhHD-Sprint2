@@ -2,6 +2,7 @@ package com.codegym.repository;
 
 import com.codegym.model.BillDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -19,4 +20,8 @@ public interface IBillDetailRepository extends JpaRepository<BillDetail, Integer
             "where p.payment_status = false and u.id =:userId",
             nativeQuery = true)
     List<BillDetail> getCartByUserId(@Param("userId") String id);
+
+//    @Modifying
+//    @Query(value = "update bill_detail set ",nativeQuery = true)
+//    void deleteProducInCart(Integer id);
 }

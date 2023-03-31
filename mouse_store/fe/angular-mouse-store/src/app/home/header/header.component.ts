@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.loader();
     this.isLogged = this.token.isLogger()
-
     this.share.getClickEvent().subscribe(() => {
       this.loader();
     })

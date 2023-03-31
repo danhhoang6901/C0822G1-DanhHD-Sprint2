@@ -15,4 +15,9 @@ public class PaymentService implements IPaymentService {
     public void addPayment(Payment payment) {
         paymentRepository.save(payment);
     }
+
+    @Override
+    public Payment getPaymentById(Integer id) {
+        return paymentRepository.getPaymentById(id);
+    }
 }

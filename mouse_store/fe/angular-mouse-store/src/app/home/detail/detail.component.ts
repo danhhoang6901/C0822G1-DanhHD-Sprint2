@@ -33,6 +33,8 @@ export class DetailComponent implements OnInit {
   size: Size = null;
   image: Image[] = [];
   isLogged = false;
+  name = "Đăng nhập";
+  role = "none";
 
   constructor(private router: Router, private shareService: ShareService, private token: TokenService,
               private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
@@ -51,22 +53,27 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLogged = this.token.isLogger()
+    this.title.setTitle("Trang chi tiết");
     this.loader()
+    this.isLogged = this.token.isLogger()
     this.shareService.getClickEvent().subscribe(next => {
       this.loader()
     })
-    this.title.setTitle("Trang chi tiết");
     this.getProductById(this.activatedRoute.snapshot.params.id);
     this.getOrder();
 
   }
 
   loader() {
+    this.isLogged = this.token.isLogger()
     if (this.isLogged) {
-      this.loginService.profile1(this.token.getId()).subscribe(next => this.user = next)
+      this.loginService.profile1(this.token.getId()).subscribe(next => {
+        this.user = next;
+        this.name = this.user?.name;
+      })
+      this.role = this.token.getRole();
+      console.log(this.role)
     }
-    console.log(this.user)
   }
 
   getProductById(id: any) {

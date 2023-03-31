@@ -23,7 +23,7 @@
       <tbody>
       <tr [class.choose]="item.id == index" *ngFor="let item of productList['content'], index as i"
           (click)="choice(item.id,item.name)" style="cursor: pointer">
-        <th scope="row">{{i + 1 + productList.number * productList.size}}</th>ng s -o
+        <th scope="row">{{i + 1 + productList.number * productList.size}}</th>
         <td>{{item.codeProduct}}</td>
         <td>{{item.name}}</td>
         <td>{{item.color}}</td>

@@ -37,4 +37,19 @@ public class BillService implements IBillService {
     public void addBillDetail(BillDetail billDetail) {
         billDetailRepository.save(billDetail);
     }
+
+    @Override
+    public BillDetail getBillDetail(Integer id) {
+        return billDetailRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public BillDetail findById(Integer id) {
+        return billDetailRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteProducInCart(Integer id) {
+        billDetailRepository.deleteById(id);
+    }
 }
