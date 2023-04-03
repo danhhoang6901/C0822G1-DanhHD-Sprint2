@@ -3,38 +3,22 @@ package com.codegym.model;
 import javax.persistence.*;
 
 @Entity
-public class BillDetail {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private int quantity;
-    private String size = "S";
+    private String size;
 
     @ManyToOne
-    @JoinColumn(name = "bill_id", referencedColumnName = "id")
-    private Bill bill;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
-    public BillDetail() {
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public Cart() {
     }
 
     public Integer getId() {
@@ -45,12 +29,28 @@ public class BillDetail {
         this.id = id;
     }
 
-    public Bill getBill() {
-        return bill;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setBill(Bill bill) {
-        this.bill = bill;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Product getProduct() {

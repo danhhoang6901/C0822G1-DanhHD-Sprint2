@@ -10,15 +10,12 @@ public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String datePurchase;
+    private double totalMoney;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
-    @OneToOne
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
-    @JsonBackReference
-    private Payment payment;
 
     @OneToMany(mappedBy = "bill")
     @JsonBackReference
@@ -35,12 +32,20 @@ public class Bill {
         this.billDetails = billDetails;
     }
 
-    public Payment getPayment() {
-        return payment;
+    public String getDatePurchase() {
+        return datePurchase;
     }
 
-    public void setPayment(Payment payment) {
-        this.payment = payment;
+    public void setDatePurchase(String datePurchase) {
+        this.datePurchase = datePurchase;
+    }
+
+    public double getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(double totalMoney) {
+        this.totalMoney = totalMoney;
     }
 
     public Integer getId() {

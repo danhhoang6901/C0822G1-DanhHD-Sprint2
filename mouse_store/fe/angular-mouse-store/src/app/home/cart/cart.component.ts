@@ -9,6 +9,7 @@ import {User} from "../../model/user";
 import {LoginService} from "../../service/login.service";
 import Swal from "sweetalert2";
 import {render} from 'creditcardpayments/creditCardPayments';
+import {Cart} from "../../model/cart";
 
 @Component({
   selector: 'app-cart',
@@ -16,12 +17,13 @@ import {render} from 'creditcardpayments/creditCardPayments';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cart: BillDetail[];
+  cart: Cart[];
   user: User;
   money: number;
   totalPrice = 0;
   length = 0;
   totalQuantity = 0;
+  check = true;
 
   constructor(private tokenService: TokenService, private title: Title,
               private router: Router, private shareService: ShareService,
@@ -35,6 +37,7 @@ export class CartComponent implements OnInit {
     this.shareService.getClickEvent().subscribe(next => {
       this.getIdUser()
     })
+
   }
 
   payment() {
@@ -43,9 +46,12 @@ export class CartComponent implements OnInit {
       currency: "USD",
       value: String(this.money),
       onApprove: (details) => {
-        // @ts-ignore
-        const note: string = document.getElementById('note').value;
-        this.cartService.payment(this.user.id, note).subscribe(next => {
+        let datePurchase = new Date();
+        let formatTime = datePurchase.toLocaleString();
+        this.cartService.buy(this.user.id, this.totalPrice, formatTime).subscribe(next => {
+          console.log("tổng tiền: " + this.totalPrice);
+          console.log("thời gian: " + formatTime);
+          console.log("id user: " + this.user.id);
           Swal.fire({
             position: 'center',
             icon: 'success',
@@ -66,15 +72,22 @@ export class CartComponent implements OnInit {
     })
   }
 
+
   getOrder() {
     this.cartService.getCart(this.user?.id).subscribe(data => {
       this.cart = data;
-      for (let i = 0; i < data?.length; i++) {
-        this.totalPrice += (this.cart[i].quantity * this.cart[i].product.price);
-        this.totalQuantity += this.cart[i].quantity;
+      this.totalQuantity = 0
+      if (this.cart != null) {
+        for (let i = 0; i < this.cart.length; i++) {
+          this.totalQuantity += this.cart[i].quantity
+        }
+        this.total()
       }
       this.money = +(this.totalPrice / 23000).toFixed(2);
-      this.payment();
+      if (this.check) {
+        this.payment();
+        this.check = false;
+      }
     });
 
   }
@@ -101,6 +114,7 @@ export class CartComponent implements OnInit {
           if (value.id === data.id) {
             value.quantity = data.quantity;
           }
+          this.shareService.sendClickEvent();
         });
         this.total();
         this.money = +(this.totalPrice / 23000).toFixed(2);
@@ -114,11 +128,12 @@ export class CartComponent implements OnInit {
       this.cart.forEach(value => {
         if (value.id === data.id) {
           value.quantity = data.quantity;
+
         }
+        this.shareService.sendClickEvent();
       });
       this.total();
       this.money = +(this.totalPrice / 23000).toFixed(2);
-      
     });
   }
 
@@ -126,6 +141,7 @@ export class CartComponent implements OnInit {
     this.cart = [];
     this.totalPrice = 0;
     this.totalQuantity = 0;
+    this.shareService.sendClickEvent();
   }
 
   deleteProductInCart(id: number, name: string) {

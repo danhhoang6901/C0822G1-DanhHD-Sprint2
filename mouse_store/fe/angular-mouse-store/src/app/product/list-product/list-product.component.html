@@ -33,7 +33,7 @@
       </tbody>
     </table>
     <button style="margin-left: 30px" class="btn btn-info" routerLink="/create">Thêm mới</button>
-    <button style="margin-left: 30px" class="btn btn-info" *ngIf="index != -1" [disabled]="index == -1" [routerLink]="['/edit',index]">Chỉnh
+    <button style="margin-left: 30px" class="btn btn-primary" *ngIf="index != -1" [disabled]="index == -1" [routerLink]="['/edit',index]">Chỉnh
       sửa
     </button>
     <button style="margin-left: 30px" class="btn btn-danger" *ngIf="index != -1" [disabled]="index == -1" (click)="deleteProduct(index)">

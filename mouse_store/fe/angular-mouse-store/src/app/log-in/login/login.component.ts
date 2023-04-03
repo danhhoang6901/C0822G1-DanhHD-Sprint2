@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
@@ -17,19 +17,23 @@ export class LoginComponent implements OnInit {
   message = ''
   form = new FormGroup({
     username: new FormControl(),
-    password: new FormControl(),
+    password: new FormControl(''),
     rememberMe: new FormControl(true)
   })
   islogged = false;
-  constructor(private title:Title,private loginService: LoginService, private token: TokenService, private router: Router, private share: ShareService) {
+  show;
+  check = false;
+
+  constructor(private title: Title, private loginService: LoginService, private token: TokenService, private router: Router, private share: ShareService) {
   }
 
   ngOnInit(): void {
     this.title.setTitle('Đăng nhập');
     this.islogged = this.token.isLogger();
-    // if (this.islogged) {
-    //   this.router.navigateByUrl('/')
-    // }
+  }
+
+  password() {
+    this.show =! this.show;
   }
 
   login() {
@@ -49,4 +53,5 @@ export class LoginComponent implements OnInit {
       }
     )
   }
+
 }

@@ -19,4 +19,8 @@ public interface IBillService {
     BillDetail findById(Integer id);
 
     void deleteProducInCart(Integer id);
+
+    Bill findBillById(Integer id);
+
+//    void deleteBill(Bill bill);
 }

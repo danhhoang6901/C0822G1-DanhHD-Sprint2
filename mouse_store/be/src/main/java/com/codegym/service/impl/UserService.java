@@ -83,41 +83,8 @@ public class UserService implements IUserService {
     }
 
 
-    @Override
-    public List<User> findAllCustomer() {
-        return iUserRepository.findAllCustomer();
-    }
-
-
-    @Override
-    public List<User> findAllEmployee() {
-        return iUserRepository.findAllEmployee();
-    }
-
-
-    @Override
-    public List<User> findAllAdmin() {
-        return iUserRepository.findAllAdmin();
-    }
-
     @Autowired
     private IUserRepository userRepository;
-
-
-    @Override
-    public Page<User> findAllCustomer(Pageable pageable, String name, String address) {
-        return userRepository.findAllCustomer(pageable, name, address);
-    }
-
-    @Override
-    public Optional<User> findCustomerById(Integer id) {
-        return userRepository.findCustomerById(id);
-    }
-
-    @Override
-    public Page<User> findAllCustomerNoParam(Pageable pageable) {
-        return userRepository.findAllCustomerNoParam(pageable);
-    }
 
 
     @Override
@@ -130,16 +97,6 @@ public class UserService implements IUserService {
         }
         return userRepository.findAll(genderSearch, ageSearch, pageable);
     }
-
-//    @Override
-//    public List<BillHistoryDTO> getUserHasBuy() {
-//        List<BillHistoryDTO> list = new ArrayList<>();
-//        for (int i = 0; i < userRepository.getUserHasBuy().size(); i++) {
-//            BillHistoryDTO billHistoryDTO = new BillHistoryDTO(userRepository.getUserHasBuy().get(i), userRepository.selectQuantity(userRepository.getUserHasBuy().get(i).getId()));
-//            list.add(billHistoryDTO);
-//        }
-//        return list;
-//    }
 
     @Override
     public User userLogin(String username) {
@@ -154,6 +111,11 @@ public class UserService implements IUserService {
     @Override
     public User userLogin1(Integer id) {
         return iUserRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public User findById(Integer user) {
+        return iUserRepository.findById(user).orElse(null);
     }
 }
 

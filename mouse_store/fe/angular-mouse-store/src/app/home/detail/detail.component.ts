@@ -35,6 +35,7 @@ export class DetailComponent implements OnInit {
   isLogged = false;
   name = "Đăng nhập";
   role = "none";
+  sizeProduct: string = 'S';
 
   constructor(private router: Router, private shareService: ShareService, private token: TokenService,
               private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
@@ -98,7 +99,7 @@ export class DetailComponent implements OnInit {
         }
       })
     }
-    this.cartService.addBill2(this.user?.id, quantity, this.detailProduct.id).subscribe(next => {
+    this.cartService.addBill2(this.user?.id, quantity, this.detailProduct.id,this.sizeProduct).subscribe(next => {
       console.log(this.user.id);
       this.totalQuantity = quantity + this.quantity;
       Swal.fire({
@@ -108,6 +109,7 @@ export class DetailComponent implements OnInit {
         showConfirmButton: false,
         timer: 2500
       })
+      this.shareService.sendClickEvent();
     }, error => {
       console.log(error)
     })
@@ -123,4 +125,7 @@ export class DetailComponent implements OnInit {
     });
   }
 
+  setSize(value: string) {
+    this.sizeProduct = value;
+  }
 }

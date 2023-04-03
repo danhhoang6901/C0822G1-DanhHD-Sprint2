@@ -17,13 +17,20 @@
                   </div>
                   <div class=" mb-4">
                     <label class="form-label" for="form2Example17">Tên tài khoản</label>
-                    <input formControlName="username" type="text" id="form2Example17" class="form-control form-control-lg"/>
+                    <input formControlName="username" type="text" id="form2Example17"
+                           class="form-control form-control-lg"/>
                     <span style="position: absolute" class="text-danger font-italic">{{message}}</span>
                   </div>
                   <div class=" mb-4">
                     <label class="form-label" for="form2Example27">Mật khẩu</label>
-                    <input formControlName="password" type="password" id="form2Example27"
-                           class="form-control form-control-lg"/>
+                    <div class="input-group">
+                      <input formControlName="password" [type]="show ? 'text' : 'password'"
+                             id="form2Example27"
+                             class="form-control form-control-lg"/>
+                      <button [disabled]="form.controls.password.value == ''" (click)="password()" type="button" class="btn btn-primary">
+                        <i class="fa" [ngClass]="{'fa-solid fa-eye-slash': !show,'fa-solid fa-eye': show}"></i>
+                      </button>
+                    </div>
                   </div>
                   <div class="pt-1 mb-4">
                     <button class="btn btn-dark btn-lg btn-block" type="submit">Đăng nhập</button>

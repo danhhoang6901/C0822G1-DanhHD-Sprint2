@@ -16,7 +16,12 @@ import java.util.Optional;
 @Transactional
 public interface IProductRepository extends JpaRepository<Product, Integer> {
 
-    @Query(value = "select product.*, image.* from product join image on image.product_id = product.id where product.name like concat('%', :name ,'%') and product.flag_delete = false group by product.id order by product.id desc", nativeQuery = true)
+    @Query(value = "select product.*, image.* from product " +
+            "join image on image.product_id = product.id " +
+            "where product.name like concat('%', :name ,'%') " +
+            "and product.flag_delete = false " +
+            "group by product.id " +
+            "order by product.id desc", nativeQuery = true)
     List<Product> getAllProduct(@Param("name") String name);
 
     @Query(value = "select * from product where id =:id and flag_delete = false ", nativeQuery = true)

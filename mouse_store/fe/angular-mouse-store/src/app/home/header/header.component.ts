@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from "../../model/user";
 import {LoginService} from "../../service/login.service";
 import {TokenService} from "../../service/token.service";
 import {Router} from "@angular/router";
 import {ShareService} from "../../service/share.service";
+import {CartService} from "../../service/cart.service";
+import {BillDetail} from "../../model/bill-detail";
 
 @Component({
   selector: 'app-header',
@@ -15,16 +17,58 @@ export class HeaderComponent implements OnInit {
   role = 'none';
   name = 'Đăng nhập'
   isLogged = false;
-  constructor(private login:LoginService,private token: TokenService,private router: Router,private share: ShareService) {
+  totalQuantity = 0;
+  cart: BillDetail[];
+
+  constructor(private cartService: CartService,
+              private login: LoginService, private token: TokenService,
+              private router: Router, private share: ShareService) {
   }
 
 
   ngOnInit(): void {
-    this.loader();
     this.isLogged = this.token.isLogger()
+    this.loader();
+    this.getIdUser();
+    this.getOrder()
+    this.getQuantity();
     this.share.getClickEvent().subscribe(() => {
+      this.isLogged = this.token.isLogger()
       this.loader();
+      this.getIdUser();
+      this.getOrder();
+      this.getQuantity();
     })
+  }
+
+
+  getQuantity() {
+    this.totalQuantity = 0
+    if (this.cart != null) {
+      for (let i = 0; i < this.cart.length; i++) {
+        this.totalQuantity += this.cart[i].quantity
+      }
+    }
+  }
+
+  getIdUser() {
+    this.login.profile1(this.token.getId()).subscribe(next => {
+      this.user = next;
+      this.getOrder();
+    })
+  }
+
+  getOrder() {
+    this.cartService.getCart(this.user?.id).subscribe(data => {
+      this.cart = data;
+      this.getQuantity();
+      // for (let i = 0; i < data?.length; i++) {
+      //   this.totalQuantity += this.cart[i].quantity;
+      //   console.log(this.cart[i].quantity)
+      // }
+      // console.log(this.totalQuantity)
+    });
+
   }
 
   loader() {
@@ -37,14 +81,15 @@ export class HeaderComponent implements OnInit {
       this.role = this.token.getRole();
     }
   }
+
   logout() {
     this.role = 'none';
     this.name = 'Đăng nhập';
     this.isLogged = false;
     this.token.logout();
     this.router.navigateByUrl('/');
+    this.share.sendClickEvent();
   }
-
 
 
   checkProfile() {
@@ -53,10 +98,5 @@ export class HeaderComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/profile')
     }
-  }
-  search1(value: string) {
-
-    this.share.sendClickEvent()
-    this.router.navigate(['home', value])
   }
 }

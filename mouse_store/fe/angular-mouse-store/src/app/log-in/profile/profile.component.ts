@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import Swal from "sweetalert2";
 import {User} from "../../model/user";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -37,9 +37,9 @@ export class ProfileComponent implements OnInit {
   })
   role = '';
   formPassword = new FormGroup({
-    password: new FormControl(),
-    newPassword: new FormControl(),
-    confirmPassword: new FormControl()
+    password: new FormControl(''),
+    newPassword: new FormControl(''),
+    confirmPassword: new FormControl('')
   })
   downloadURL: Observable<string> | undefined;
   src: string | undefined;
@@ -49,6 +49,9 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.share.getClickEvent().subscribe(next => {
+      this.getInfo();
+    })
     this.title.setTitle('Trang cá nhân');
     if (!this.token.isLogger()) {
       this.router.navigateByUrl('/home')
@@ -101,7 +104,7 @@ export class ProfileComponent implements OnInit {
       })
       document.getElementById('huy').click()
       this.share.sendClickEvent();
-      this.getInfo();
+
     }, error => {
       Swal.fire({
         position: 'center',
@@ -144,7 +147,7 @@ export class ProfileComponent implements OnInit {
           this.downloadURL.subscribe(url => {
             if (url) {
               // lấy lại url
-              this.user.avatar = url;
+              // this.user.avatar = url;
             }
             this.form.patchValue({avatar: url});
             // console.log('link: ', this.fb);
@@ -157,6 +160,9 @@ export class ProfileComponent implements OnInit {
   passwordError = '';
   newPasswordError = '';
   confirmPasswordError = '';
+  op: boolean;
+  np: boolean;
+  cp: boolean;
 
   changePassword() {
     this.passwordError = '';
@@ -192,5 +198,20 @@ export class ProfileComponent implements OnInit {
         }
       }
     )
+  }
+
+  oldPassword() {
+    this.op = !this.op;
+
+  }
+
+  newPassword() {
+    this.np = !this.np;
+
+  }
+
+  confirmPassword() {
+    this.cp = !this.cp;
+
   }
 }

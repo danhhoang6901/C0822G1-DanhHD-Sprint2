@@ -5,8 +5,8 @@
 
     </header>
     <div style="width: 500px ; margin-left: 397px ;" class="input-group">
-      <input #search  placeholder="Tìm kiếm sản phẩm ..." type="search" id="form1" class="form-control"/>
-      <button (click)="loader(search.value)" type="button" class="btn btn-secondary">
+      <input #search placeholder="Tìm kiếm sản phẩm ..." type="search" id="form1" class="form-control"/>
+      <button (click)="loader(search.value)" type="button" class="btn btn-info">
         <i class="fas fa-search"></i>
       </button>
     </div>
@@ -16,7 +16,19 @@
         <!-- Card-->
         <div style="margin-top: 20px" class="card rounded shadow-sm border-0 image">
           <div class="card-body p-4">
-            <a [routerLink]="['/detail',product.id]"><img
+            <label *ngIf="product.quantity == 0 && role == 'ROLE_CUSTOMER' || product.quantity != 0 && role == 'ROLE_CUSTOMER'|| isLogged == false" class="hoverable">
+              <a [routerLink]="['/detail',product.id]"><img
+                src="{{product.images[0].url}}"
+                class="img-fluid d-block mx-auto mb-3"></a>
+              <div style="margin-left: 30px" class="hover-text">
+                <a (click)="addToCart(product?.id,quality)"
+                   role="button"
+                   class="btn btn-success btn-lg" style="color: white">Thêm vào giỏ hàng</a>
+              </div>
+              <div class="background"></div>
+            </label>
+            <a *ngIf="product.quantity == 0 && role == 'ROLE_ADMIN' && isLogged == true || product.quantity != 0 && role == 'ROLE_ADMIN' && isLogged == true"
+               [routerLink]="['/detail',product.id]"><img
               src="{{product.images[0].url}}"
               class="img-fluid d-block mx-auto mb-3"></a>
             <h5><a [routerLink]="['/detail',product.id]" class="text-dark">{{product.name}}</a></h5>

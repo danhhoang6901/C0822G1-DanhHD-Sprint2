@@ -14,36 +14,38 @@ export class CartService {
   }
 
   getCart(id: number): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8080/bill/cart/" + id);
+    return this.httpClient.get<any>("http://localhost:8080/cart/" + id);
   }
 
 
-  addBill(billForm: any): Observable<any> {
-    return this.httpClient.post<any>("http://localhost:8080/bill/addBill", billForm);
-  }
-
-  addBill2(user: number, quantity: number, product: number): Observable<any> {
+  addBill2(user: number, quantity: number, product: number, size: string): Observable<any> {
     let dto = {
       user: user,
       quantity: quantity,
-      product: product
+      product: product,
+      size: size
     }
-    return this.httpClient.post<any>("http://localhost:8080/bill/addBill", dto);
+    return this.httpClient.post<any>("http://localhost:8080/cart/addCart", dto);
   }
 
   minusQuantity(id): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8080/bill/minus/" + id);
+    return this.httpClient.get<any>("http://localhost:8080/cart/minus/" + id);
   }
 
   plusQuantity(id): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8080/bill/plus/" + id);
+    return this.httpClient.get<any>("http://localhost:8080/cart/plus/" + id);
   }
 
   deleteProductInCart(id): Observable<any> {
-    return this.httpClient.delete<any>("http://localhost:8080/bill/delete/" + id);
+    return this.httpClient.delete<any>("http://localhost:8080/cart/delete/" + id);
   }
 
-  payment(id, note: string): Observable<any> {
-    return this.httpClient.get<any>("http://localhost:8080/bill/payment/" + id + "?note=" + note);
+  buy(id, totalMoney, time): Observable<any> {
+    let dto = {
+      user: id,
+      totalMoney: totalMoney,
+      datePurchase: time,
+    }
+    return this.httpClient.post("http://localhost:8080/cart/buy", dto);
   }
 }

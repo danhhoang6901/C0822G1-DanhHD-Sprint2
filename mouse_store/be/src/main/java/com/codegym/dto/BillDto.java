@@ -2,16 +2,16 @@ package com.codegym.dto;
 
 public class BillDto {
     private Integer user;
-    private int quantity;
-    private Integer product;
+    private String datePurchase;
+    private Integer totalMoney;
 
     public BillDto() {
     }
 
-    public BillDto(Integer user, int quantity, Integer product) {
+    public BillDto(Integer user, String datePurchase, Integer totalMoney) {
         this.user = user;
-        this.quantity = quantity;
-        this.product = product;
+        this.datePurchase = datePurchase;
+        this.totalMoney = totalMoney;
     }
 
     public Integer getUser() {
@@ -22,19 +22,19 @@ public class BillDto {
         this.user = user;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getDatePurchase() {
+        return datePurchase;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setDatePurchase(String datePurchase) {
+        this.datePurchase = datePurchase;
     }
 
-    public Integer getProduct() {
-        return product;
+    public Integer getTotalMoney() {
+        return totalMoney;
     }
 
-    public void setProduct(Integer product) {
-        this.product = product;
+    public void setTotalMoney(Integer totalMoney) {
+        this.totalMoney = totalMoney;
     }
 }

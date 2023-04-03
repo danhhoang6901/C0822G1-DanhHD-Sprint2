@@ -26,22 +26,6 @@ public interface IUserService {
 
     List<User> findAll();
 
-    List<User> findAllCustomer();
-
-    List<User> findAllEmployee();
-
-    List<User> findAllAdmin();
-
-
-    Page<User> findAllCustomer(Pageable pageable, String name, String address);
-
-
-    Optional<User> findCustomerById(Integer id);
-
-
-    Page<User> findAllCustomerNoParam(Pageable pageable);
-
-
     Page<User> findAll(String genderSearch, String ageSearch, Pageable pageable);
 
     User userLogin(String username);
@@ -49,4 +33,6 @@ public interface IUserService {
     User getUserById(Integer user);
 
     User userLogin1(Integer id);
+
+    User findById(Integer user);
 }

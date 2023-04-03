@@ -52,4 +52,14 @@ public class BillService implements IBillService {
     public void deleteProducInCart(Integer id) {
         billDetailRepository.deleteById(id);
     }
+
+    @Override
+    public Bill findBillById(Integer id) {
+        return billRepository.findById(id).orElse(null);
+    }
+
+//    @Override
+//    public void deleteBill(Bill bill) {
+//        billRepository.deleteBill(bill);
+//    }
 }
