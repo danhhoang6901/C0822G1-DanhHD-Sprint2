@@ -48,6 +48,7 @@ export class CartComponent implements OnInit {
       onApprove: (details) => {
         let datePurchase = new Date();
         let formatTime = datePurchase.toLocaleString();
+        console.log(formatTime)
         this.cartService.buy(this.user.id, this.totalPrice, formatTime).subscribe(next => {
           console.log("tổng tiền: " + this.totalPrice);
           console.log("thời gian: " + formatTime);

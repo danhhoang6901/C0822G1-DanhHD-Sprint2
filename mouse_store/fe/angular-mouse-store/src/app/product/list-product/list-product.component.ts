@@ -20,7 +20,8 @@ export class ListProductComponent implements OnInit {
   index = -1;
   item: string;
 
-  constructor(private token: TokenService, private router: Router, private title: Title, private productService: ProductService) {
+  constructor(private token: TokenService, private router: Router,
+              private title: Title, private productService: ProductService) {
   }
 
   ngOnInit(): void {

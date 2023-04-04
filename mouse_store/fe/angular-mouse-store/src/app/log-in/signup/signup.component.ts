@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from "sweetalert2";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {LoginService} from "../../service/login.service";
 import {Router} from "@angular/router";
@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class SignupComponent implements OnInit {
   registerForm = new FormGroup({
-    username: new FormControl(),
+    username: new FormControl('',[Validators.required]),
     name: new FormControl(),
     email: new FormControl(),
     password: new FormControl(),

@@ -5,7 +5,8 @@ import {LogInRoutingModule} from './log-in-routing.module';
 import {LoginComponent} from './login/login.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {SignupComponent} from './signup/signup.component';
-import { ProfileComponent } from './profile/profile.component';
+import {ProfileComponent} from './profile/profile.component';
+import {HomeRoutingModule} from "../home/home-routing.module";
 
 
 @NgModule({

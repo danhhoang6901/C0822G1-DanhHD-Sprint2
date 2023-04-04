@@ -4,7 +4,6 @@ import com.codegym.dto.ImageDto;
 import com.codegym.dto.ProductDto;
 import com.codegym.model.Image;
 import com.codegym.model.Product;
-import com.codegym.model.Role;
 import com.codegym.model.Size;
 import com.codegym.service.IImageService;
 import com.codegym.service.IProductService;
@@ -13,7 +12,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +36,8 @@ public class ProductRestController {
     private IImageService imageService;
 
     @GetMapping("")
-    public ResponseEntity<List<Product>> getAllProduct(@RequestParam(name = "name", defaultValue = "", required = false) String name) {
+    public ResponseEntity<List<Product>> getAllProduct(@RequestParam(name = "name", defaultValue = "", required = false)
+                                                               String name) {
         List<Product> products = productService.getAllProduct(name);
         if (products.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -115,6 +112,6 @@ public class ProductRestController {
         }
         BeanUtils.copyProperties(productDto, product);
         productService.editProduct(product);
-        return new ResponseEntity<>(product,HttpStatus.OK);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }

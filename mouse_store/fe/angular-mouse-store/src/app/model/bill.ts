@@ -1,8 +1,8 @@
 import {User} from "./user";
-import {BillDetail} from "./bill-detail";
 
 export interface Bill {
   id?: number;
+  datePurchase?: string;
+  totalMoney?: number;
   user?: User;
-  billDetails?: BillDetail;
 }

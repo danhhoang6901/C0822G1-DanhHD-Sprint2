@@ -62,11 +62,6 @@ export class HeaderComponent implements OnInit {
     this.cartService.getCart(this.user?.id).subscribe(data => {
       this.cart = data;
       this.getQuantity();
-      // for (let i = 0; i < data?.length; i++) {
-      //   this.totalQuantity += this.cart[i].quantity;
-      //   console.log(this.cart[i].quantity)
-      // }
-      // console.log(this.totalQuantity)
     });
 
   }

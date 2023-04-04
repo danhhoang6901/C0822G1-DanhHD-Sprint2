@@ -4,6 +4,7 @@ import {BodyComponent} from "./body/body.component";
 import {CartComponent} from "./cart/cart.component";
 import {DetailComponent} from "./detail/detail.component";
 import {UserGuard} from "../log-in/security/user.guard";
+import {BillHistoryComponent} from "./bill-history/bill-history.component";
 
 
 const routes: Routes = [{
@@ -14,6 +15,9 @@ const routes: Routes = [{
   },
   {
     path: "detail/:id", component: DetailComponent
+  },
+  {
+    path: "billHistory/:id", component: BillHistoryComponent
   }];
 
 @NgModule({

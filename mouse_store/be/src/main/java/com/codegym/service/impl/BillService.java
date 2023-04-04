@@ -6,6 +6,8 @@ import com.codegym.repository.IBillDetailRepository;
 import com.codegym.repository.IBillRepository;
 import com.codegym.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,8 +60,14 @@ public class BillService implements IBillService {
         return billRepository.findById(id).orElse(null);
     }
 
-//    @Override
-//    public void deleteBill(Bill bill) {
-//        billRepository.deleteBill(bill);
-//    }
+    @Override
+    public Page<Bill> showBill(Pageable pageable, Integer id) {
+        return billRepository.showBill(pageable,id);
+    }
+
+    @Override
+    public List<Bill> showAllBill() {
+        return billRepository.showAllBill();
+    }
+
 }

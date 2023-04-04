@@ -51,7 +51,7 @@
                 </div>
                 <div class="mt-5 text-center">
                   <button class="btn btn-primary" type="submit">Chỉnh sửa</button>
-                  <button style="margin-left: 20px" type="button" class="btn btn-secondary"
+                  <button style="margin-left: 20px" id="dismiss2" type="button" class="btn btn-secondary"
                           data-bs-dismiss="modal">
                     Hủy
                   </button>
@@ -145,72 +145,61 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
+        <div *ngIf="index == 0  && role == 'ROLE_CUSTOMER'" class="row">
+          <div class="col-md-12">
+            <h2>Lịch sử mua hàng</h2>
             <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th scope="col">STT</th>
+                  <th scope="col">Ngày mua</th>
+                  <th scope="col">Tổng tiền</th>
+                  <th scope="col">Chi tiết</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let b of bill['content']; index as i">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{b.datePurchase}}</td>
+                  <td>{{b.totalMoney | number}}đ</td>
+                  <td>
+                    <button (click)="showBillDetail(b.id)" type="button" class="btn btn-primary">Xem</button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-          <div class="col-md-6">
+        </div>
+        <div *ngIf="index == 1  && role == 'ROLE_CUSTOMER'" class="row">
+          <div class="col-md-12">
+            <h2>Chi tiết lịch sử mua hàng</h2>
             <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">assigment</span> Project Status
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Web Design</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
-                <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
-                       aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th scope="col">STT</th>
+                  <th scope="col">Tên sản phẩm</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Giá</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Ngày mua</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let bh of billHistory;index as i">
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{bh.name}}</td>
+                  <td>{{bh.size}}</td>
+                  <td>{{bh.price | number}}đ</td>
+                  <td>{{bh.quantity}}</td>
+                  <td>{{bh.datePurchase}}</td>
+                </tr>
+                </tbody>
+              </table>
             </div>
+            <button style="margin-top: 10px" class="btn btn-secondary" (click)="index = 0">Quay lại</button>
           </div>
         </div>
       </div>
@@ -234,8 +223,12 @@
                     <input style="display:none;" formControlName="avatar"> <br> <br>
                     <input accept=".jpg, .png, .jpeg, .gif, .pdf" id="fileInput" type="file"
                            (change)="showPreview($event)">
-                    <img class="rounded-circle" style="width: 150px;height: 150px;object-fit: cover"
+                    <img *ngIf="idLoadding == false" class="rounded-circle"
+                         style="width: 150px;height: 150px;object-fit: cover"
                          [src]="form.controls.avatar.value">
+                    <div *ngIf="idLoadding == true" id="loading">
+                    </div>
+                    <p *ngIf="idLoadding == true">Chờ trong giây lát ...</p>
                     <div style="margin-top: 30px;margin-left: 20px" class="hover-text">Chọn ảnh</div>
                     <div class="background"></div>
                     <span class="text-danger">{{avatarError}}</span>

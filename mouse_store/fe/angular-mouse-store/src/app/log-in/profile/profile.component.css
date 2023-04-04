@@ -1,11 +1,9 @@
-
-
 /*img {*/
 /*  height: 100%;*/
 /*  width: 100%;*/
 /*  border-radius: 50%;*/
 /*}*/
-.hoverable{
+.hoverable {
   position: relative;
   display: block;
   cursor: pointer;
@@ -14,36 +12,41 @@
   /*border: 5px solid #000;*/
   /*border-radius: 50%;*/
 }
-.hoverable .hover-text{
+
+.hoverable .hover-text {
   position: absolute;
   display: none;
   top: 50%;
-  left:  40%;
-  transform: translate(-50%,-50%);
+  left: 40%;
+  transform: translate(-50%, -50%);
   z-index: 2;
 }
-.hoverable .background{
+
+.hoverable .background {
   position: absolute;
   display: none;
   top: 0;
-  left:  0;
+  left: 0;
   bottom: 0;
   right: 0;
-  background-color:rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   pointer-events: none;
   /*border-radius: 50%;*/
   /*z-index: 1;*/
 }
-.hoverable:hover .hover-text{
-  display: block;
-}
-.hoverable:hover .background{
+
+.hoverable:hover .hover-text {
   display: block;
 }
 
-#fileInput{
+.hoverable:hover .background {
+  display: block;
+}
+
+#fileInput {
   display: none;
 }
+
 body {
   background: rgb(99, 39, 120)
 }
@@ -87,4 +90,41 @@ body {
   color: #fff;
   cursor: pointer;
   border: solid 1px #BA68C8
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:100);
+
+body {
+  margin-top: 100px;
+  background-color: #137b85;
+  color: black;
+  text-align: center;
+}
+
+h1 {
+  font: 2em 'Roboto', sans-serif;
+  margin-bottom: 40px;
+}
+
+#loading {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, .3);
+  border-radius: 50%;
+  border-top-color: black;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }

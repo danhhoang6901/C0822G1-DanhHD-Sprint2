@@ -6,10 +6,14 @@ import {Observable} from "rxjs";
 import {AngularFireStorage} from "@angular/fire/storage";
 import {ShareService} from "../../service/share.service";
 import {TokenService} from "../../service/token.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../service/login.service";
 import {Title} from "@angular/platform-browser";
 import {finalize} from "rxjs/operators";
+import {Bill} from "../../model/bill";
+import {BillService} from "../../service/bill.service";
+import {BillHistoryService} from "../../service/bill-history.service";
+import {BillHistoryDto} from "../../dto/bill-history-dto";
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +21,8 @@ import {finalize} from "rxjs/operators";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
+  index = 0;
+  idLoadding = false;
   nameError = '';
   phoneNumberError = '';
   emailError = '';
@@ -27,13 +32,13 @@ export class ProfileComponent implements OnInit {
   avatarError = '';
   user: User;
   form = new FormGroup({
-    name: new FormControl(),
-    phoneNumber: new FormControl(),
-    email: new FormControl(),
-    address: new FormControl(),
-    gender: new FormControl(),
-    dateOfBirth: new FormControl(),
-    avatar: new FormControl()
+    name: new FormControl(''),
+    phoneNumber: new FormControl(''),
+    email: new FormControl(''),
+    address: new FormControl(''),
+    gender: new FormControl(''),
+    dateOfBirth: new FormControl(''),
+    avatar: new FormControl('')
   })
   role = '';
   formPassword = new FormGroup({
@@ -43,21 +48,41 @@ export class ProfileComponent implements OnInit {
   })
   downloadURL: Observable<string> | undefined;
   src: string | undefined;
+  bill: Bill = {};
+  billHistory: BillHistoryDto[];
+  isLogged = false;
 
-  constructor(private storage: AngularFireStorage, private share: ShareService, private token: TokenService, private router: Router, private userService: LoginService, private title: Title) {
-
+  constructor(private storage: AngularFireStorage, private share: ShareService, private token: TokenService,
+              private router: Router, private userService: LoginService, private title: Title,
+              private billService: BillService, private loginService: LoginService,
+              private billHistoryService: BillHistoryService) {
   }
 
   ngOnInit(): void {
+    this.loader()
     this.share.getClickEvent().subscribe(next => {
       this.getInfo();
+      this.loader()
     })
+    console.log(this.role)
+    console.log(this.index)
     this.title.setTitle('Trang cá nhân');
     if (!this.token.isLogger()) {
       this.router.navigateByUrl('/home')
     } else {
       this.getInfo();
       this.getValue();
+    }
+    this.getIdUser();
+  }
+
+  loader() {
+    this.isLogged = this.token.isLogger()
+    if (this.isLogged) {
+      this.loginService.profile1(this.token.getId()).subscribe(next => {
+        this.user = next;
+      })
+      this.role = this.token.getRole();
     }
   }
 
@@ -71,6 +96,19 @@ export class ProfileComponent implements OnInit {
     this.form.controls.avatar.patchValue(this.user?.avatar);
   }
 
+  getIdUser() {
+    this.loginService.profile1(this.token.getId()).subscribe(next => {
+      this.user = next;
+      this.showBill(0);
+    })
+  }
+
+  showBill(page: number) {
+    this.billService.showBill(page, this.user?.id).subscribe(next => {
+      this.bill = next;
+    })
+  }
+
 
   getInfo() {
     this.userService.profile(this.token.getUsername()).subscribe(
@@ -78,11 +116,18 @@ export class ProfileComponent implements OnInit {
         this.user = next;
         // @ts-ignore
         this.role = this.user.role;
-        console.log(this.token.getRole())
         this.getValue();
 
       }
     )
+  }
+
+  getForm() {
+    this.formPassword = new FormGroup({
+      password: new FormControl(''),
+      newPassword: new FormControl(''),
+      confirmPassword: new FormControl('')
+    })
   }
 
   update() {
@@ -139,6 +184,7 @@ export class ProfileComponent implements OnInit {
     const filePath = this.selectedImage.name;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, this.selectedImage);
+    this.idLoadding = true
     task
       .snapshotChanges()
       .pipe(
@@ -146,10 +192,11 @@ export class ProfileComponent implements OnInit {
           this.downloadURL = fileRef.getDownloadURL();
           this.downloadURL.subscribe(url => {
             if (url) {
+              this.idLoadding = true;
               // lấy lại url
-              // this.user.avatar = url;
             }
             this.form.patchValue({avatar: url});
+            this.idLoadding = false;
             // console.log('link: ', this.fb);
           });
         })
@@ -177,6 +224,7 @@ export class ProfileComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500
         })
+        this.getForm();
         document.getElementById('dismiss2').click()
       }, error => {
         console.log(error)
@@ -213,5 +261,14 @@ export class ProfileComponent implements OnInit {
   confirmPassword() {
     this.cp = !this.cp;
 
+  }
+
+  showBillDetail(id) {
+    this.index = 1
+    console.log(id)
+    this.billHistoryService.showBillDetail(id).subscribe(next => {
+      this.billHistory = next;
+      console.log(next)
+    })
   }
 }
