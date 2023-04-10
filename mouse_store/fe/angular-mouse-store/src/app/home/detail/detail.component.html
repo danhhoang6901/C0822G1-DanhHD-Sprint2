@@ -1,10 +1,10 @@
 <section class="bg-light">
   <div class="container pb-5">
     <div class="row">
-
       <div class="col-lg-5 mt-5">
         <div class="card mb-3">
-          <img [src]="detailProduct.images[0].url">
+          <img *ngIf="urlImg == undefined" [src]="detailProduct.images[0].url">
+          <img *ngIf="urlImg != undefined" [src]="urlImg">
           <!--          <img class="card-img img-fluid"-->
           <!--               src="https://firebasestorage.googleapis.com/v0/b/c0822g1-mobile-shop-d949d.appspot.com/o/16567-clean-z3351628479742-f672d13ee8cbddd92d8accb24cd4c7b2-removebg-preview.png?alt=media&token=1bae1149-f5c7-4c99-b82b-7dcf6af70610"-->
           <!--               id="product-detail">-->
@@ -26,11 +26,9 @@
               <div class="carousel-item active">
                 <div class="row">
                   <div class="col-4" *ngFor="let pd of detailProduct.images">
-                    <a href="#">
-                      <img class=" ard-img img-fluid"
-                           src="{{pd.url}}"
-                           alt="Product Image 1">
-                    </a>
+                    <img class=" ard-img img-fluid"
+                         src="{{pd.url}}"
+                         (click)="clickImg(pd.url)">
                   </div>
                 </div>
               </div>

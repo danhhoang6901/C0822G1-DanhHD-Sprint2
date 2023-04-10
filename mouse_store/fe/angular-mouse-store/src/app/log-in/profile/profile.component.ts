@@ -59,20 +59,20 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLogged = this.token.isLogger()
     this.loader()
     this.share.getClickEvent().subscribe(next => {
-      this.getInfo();
+      this.isLogged = this.token.isLogger()
       this.loader()
     })
     console.log(this.role)
     console.log(this.index)
     this.title.setTitle('Trang cá nhân');
-    if (!this.token.isLogger()) {
-      this.router.navigateByUrl('/home')
-    } else {
-      this.getInfo();
-      this.getValue();
-    }
+    // if (!this.token.isLogger()) {
+    //   this.router.navigateByUrl('/home')
+    // } else {
+    //   this.getValue();
+    // }
     this.getIdUser();
   }
 
@@ -81,6 +81,7 @@ export class ProfileComponent implements OnInit {
     if (this.isLogged) {
       this.loginService.profile1(this.token.getId()).subscribe(next => {
         this.user = next;
+        this.getValue()
       })
       this.role = this.token.getRole();
     }
@@ -110,18 +111,6 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  getInfo() {
-    this.userService.profile(this.token.getUsername()).subscribe(
-      next => {
-        this.user = next;
-        // @ts-ignore
-        this.role = this.user.role;
-        this.getValue();
-
-      }
-    )
-  }
-
   getForm() {
     this.formPassword = new FormGroup({
       password: new FormControl(''),
@@ -138,7 +127,6 @@ export class ProfileComponent implements OnInit {
     this.genderError = '';
     this.dateOfBirthError = '';
     this.avatarError = '';
-    // @ts-ignore
     this.userService.updateUser(this.form.value).subscribe(next => {
       Swal.fire({
         position: 'center',

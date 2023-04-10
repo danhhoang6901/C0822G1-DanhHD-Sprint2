@@ -21,6 +21,7 @@ import {finalize} from "rxjs/operators";
 import {Image} from "../../model/image";
 import {ImageDto} from "../../dto/image-dto";
 import {ProductDto} from "../../dto/product-dto";
+import {ShareService} from "../../service/share.service";
 
 @Component({
   selector: 'app-create-product',
@@ -41,9 +42,11 @@ export class CreateProductComponent implements OnInit {
   readFile: any[] | [];
   product: ProductDto;
 
-  constructor(private formBuilder: FormBuilder, private storage: AngularFireStorage, private title: Title, private router: Router, private productService: ProductService,
+  constructor(private formBuilder: FormBuilder, private storage: AngularFireStorage, private title: Title,
+              private router: Router, private productService: ProductService,
               private categoryService: CategoryService, private originService: OriginService,
-              private styleService: StyleService, private trademarkService: TrademarkService) {
+              private styleService: StyleService, private trademarkService: TrademarkService,
+              private shareService: ShareService) {
     this.productForm = this.formBuilder.group({
       name: new FormControl(),
       codeProduct: new FormControl(),
@@ -77,6 +80,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   addProduct() {
+    console.log(this.readFile)
     if (this.productForm.valid) {
       this.product = this.productForm.value;
       for (let i = 0; i < this.readFile.length; i++) {

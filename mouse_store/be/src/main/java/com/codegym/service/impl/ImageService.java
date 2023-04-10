@@ -6,6 +6,8 @@ import com.codegym.service.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImageService implements IImageService {
     @Autowired
@@ -14,5 +16,20 @@ public class ImageService implements IImageService {
     @Override
     public void createImage(Image image) {
         imageRepository.createImage(image);
+    }
+
+    @Override
+    public List<Image> showImageByIdProduct(Integer id) {
+        return imageRepository.showImageByIdProduct(id);
+    }
+
+    @Override
+    public Image getImgUrlPruct(Integer id) {
+        return imageRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteImageById(Image image) {
+        imageRepository.delete(image);
     }
 }

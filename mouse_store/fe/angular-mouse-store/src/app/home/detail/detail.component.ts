@@ -36,6 +36,7 @@ export class DetailComponent implements OnInit {
   name = "Đăng nhập";
   role = "none";
   sizeProduct: string = 'S';
+  urlImg: string;
 
   constructor(private router: Router, private shareService: ShareService, private token: TokenService,
               private title: Title, private productService: ProductService, private activatedRoute: ActivatedRoute,
@@ -127,5 +128,10 @@ export class DetailComponent implements OnInit {
 
   setSize(value: string) {
     this.sizeProduct = value;
+  }
+
+  clickImg(url: string) {
+    this.urlImg = url;
+    console.log(this.urlImg)
   }
 }

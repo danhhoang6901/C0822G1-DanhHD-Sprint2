@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Category} from "../../model/category";
 import {Origin} from "../../model/origin";
 import {Style} from "../../model/style";
 import {Trademark} from "../../model/trademark";
 import {AngularFireStorage} from "@angular/fire/storage";
 import {Title} from "@angular/platform-browser";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {ProductService} from "../../service/product.service";
 import {CategoryService} from "../../service/category.service";
 import {OriginService} from "../../service/origin.service";
@@ -18,6 +18,8 @@ import {Observable} from "rxjs";
 import {ProductDto} from "../../dto/product-dto";
 import {finalize} from "rxjs/operators";
 import {ImageDto} from "../../dto/image-dto";
+import {ShareService} from "../../service/share.service";
+import {ImageService} from "../../service/image.service";
 
 @Component({
   selector: 'app-edit-product',
@@ -30,42 +32,24 @@ export class EditProductComponent implements OnInit {
   originList: Origin[] = [];
   styleList: Style[] = [];
   trademarkList: Trademark[] = [];
-  productList: Product = {};
+  productList: Product;
   selectedImage: any[] = [];
   downloadURL: Observable<string> | undefined;
   fb: string | undefined;
   src: string | undefined;
   img: any[] = [];
-  readFile: any[] | [];
+  readFile: any[] = [];
   product: ProductDto;
+  id: number | undefined;
+  image: ImageDto[] = [];
+  idImageList: any[] = [];
 
-  constructor(private formBuilder: FormBuilder, private storage: AngularFireStorage, private title: Title, private router: Router, private productService: ProductService,
+  constructor(private formBuilder: FormBuilder, private storage: AngularFireStorage, private title: Title,
+              private router: Router, private productService: ProductService,
               private categoryService: CategoryService, private originService: OriginService,
               private styleService: StyleService, private trademarkService: TrademarkService,
-              private activatedRoute: ActivatedRoute) {
-    this.productForm = this.formBuilder.group({
-      id: new FormControl(),
-      name: new FormControl(),
-      codeProduct: new FormControl(),
-      image: [],
-      color: new FormControl(),
-      description: new FormControl(),
-      price: new FormControl(),
-      material: new FormControl(),
-      washingInstructions: new FormControl(),
-      category: new FormControl(""),
-      origin: new FormControl(""),
-      style: new FormControl(""),
-      trademark: new FormControl("")
-    });
-    this.productService.findProductById(this.activatedRoute.snapshot.paramMap.get("id")).subscribe(next => {
-      if (next != undefined) {
-        console.log(this.productForm.patchValue(next));
-        this.productList = next;
-        console.log(this.productList.images)
-      }
-      // console.log(next)
-    })
+              private activatedRoute: ActivatedRoute, private imageService: ImageService) {
+
     this.categoryService.getAllCategory().subscribe(next => {
       this.categoryList = next;
     });
@@ -80,9 +64,36 @@ export class EditProductComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
     this.title.setTitle("Chỉnh sửa sản phẩm")
+    // this.getProductById()
   }
+
+  // getProductById() {
+  //   this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+  //     // @ts-ignore
+  //     this.id = +paramMap.get("id");
+  //     console.log('id nè ' + this.id);
+  //     this.productService.findProductById(this.id).subscribe(anime => {
+  //       this.anime = anime;
+  //       this.animeService.getListImgProductId(this.anime.id).subscribe(value => {
+  //         this.imgs = value;
+  //       });
+  //       this.formEditAnime = this.formBuilder.group({
+  //         id: [anime.id],
+  //         name: [anime.name],
+  //         description: [anime.description],
+  //         price: [anime.price],
+  //         quantity: [anime.quantity],
+  //         author: [anime.author],
+  //         origin: [anime.origin],
+  //         images: [1],
+  //       });
+  //     }, error => {
+  //     });
+  //   });
+  // }
 
   compareFun(item1, item2) {
     return item1 && item2 ? item1.id === item2.id : item1 === item2;
@@ -106,9 +117,8 @@ export class EditProductComponent implements OnInit {
     );
   }
 
-  editProduct() {
+  editProduct(id: any) {
     if (this.productForm.valid) {
-      this.product = this.productForm.value;
       for (let i = 0; i < this.readFile.length; i++) {
         this.selectedImage = this.readFile[i];
         const filePath = "Image Product";
@@ -129,7 +139,8 @@ export class EditProductComponent implements OnInit {
           });
       }
       setTimeout(() => {
-        this.productService.editProduct(this.product, this.productForm.value.id).subscribe(next => {
+        this.product = this.productForm.value;
+        this.productService.editProduct(this.product, id).subscribe(next => {
           if (this.img.length != 0) {
             for (let i = 0; i < this.img.length; i++) {
               const image: ImageDto = {
@@ -137,6 +148,12 @@ export class EditProductComponent implements OnInit {
                 product: next.id
               };
               this.productService.createImage(image).subscribe(next => {
+              })
+            }
+          }
+          if (this.idImageList.length !== 0) {
+            for (let i = 0; i < this.idImageList.length; i++) {
+              this.imageService.deleteImageById(this.idImageList[i]).subscribe(next => {
               })
             }
           }
@@ -165,6 +182,7 @@ export class EditProductComponent implements OnInit {
   showPreview(event: any) {
     const files = event.target.files;
     this.readFile = event.target.files;
+    console.log(this.readFile)
     if ((files.length + this.selectedImage.length) < 6) {
       for (const file of files) {
         if (file.size > 1048576) {
@@ -184,12 +202,18 @@ export class EditProductComponent implements OnInit {
     }
   }
 
-  deleteImage(i: number) {
+  deleteImageNew(i: number) {
     if (this.selectedImage.length == 1) {
       this.selectedImage.splice(i, 1);
-      this.productForm.controls.images.setValue([]);
+      this.productForm.controls.image.setValue([]);
     } else {
       this.selectedImage.splice(i, 1);
     }
+    console.log(this.productForm.value)
+  }
+
+  deleteImage(i: number, img: any) {
+    this.idImageList.push(img.id);
+    this.image.splice(i, 1);
   }
 }

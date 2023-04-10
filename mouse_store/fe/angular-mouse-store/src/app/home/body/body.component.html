@@ -5,18 +5,20 @@
 
     </header>
     <div style="width: 500px ; margin-left: 397px ;" class="input-group">
-      <input #search placeholder="Tìm kiếm sản phẩm ..." type="search" id="form1" class="form-control"/>
-      <button (click)="loader(search.value)" type="button" class="btn btn-info">
+      <input [(ngModel)]="search" placeholder="Tìm kiếm sản phẩm ..." type="search" id="form1" class="form-control"/>
+      <button (click)="loader(0)" type="button" class="btn btn-info">
         <i class="fas fa-search"></i>
       </button>
     </div>
     <div class="row pb-5 mb-4">
 
-      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" *ngFor="let product of productList">
+      <div class="col-lg-3 col-md-6 mb-4 mb-lg-0" *ngFor="let product of productList['content']">
         <!-- Card-->
         <div style="margin-top: 20px" class="card rounded shadow-sm border-0 image">
           <div class="card-body p-4">
-            <label *ngIf="product.quantity == 0 && role == 'ROLE_CUSTOMER' || product.quantity != 0 && role == 'ROLE_CUSTOMER'|| isLogged == false" class="hoverable">
+            <label
+              *ngIf="product.quantity == 0 && role == 'ROLE_CUSTOMER' || product.quantity != 0 && role == 'ROLE_CUSTOMER'|| isLogged == false"
+              class="hoverable">
               <a [routerLink]="['/detail',product.id]"><img
                 src="{{product.images[0].url}}"
                 class="img-fluid d-block mx-auto mb-3"></a>
@@ -27,8 +29,9 @@
               </div>
               <div class="background"></div>
             </label>
-            <a *ngIf="product.quantity == 0 && role == 'ROLE_ADMIN' && isLogged == true || product.quantity != 0 && role == 'ROLE_ADMIN' && isLogged == true"
-               [routerLink]="['/detail',product.id]"><img
+            <a
+              *ngIf="product.quantity == 0 && role == 'ROLE_ADMIN' && isLogged == true || product.quantity != 0 && role == 'ROLE_ADMIN' && isLogged == true"
+              [routerLink]="['/detail',product.id]"><img
               src="{{product.images[0].url}}"
               class="img-fluid d-block mx-auto mb-3"></a>
             <h5><a [routerLink]="['/detail',product.id]" class="text-dark">{{product.name}}</a></h5>
@@ -48,6 +51,45 @@
             <b>{{product.price | number}}đ</b>
           </div>
         </div>
+      </div>
+      <div class="container-fluid" *ngIf="productList?.content?.length != 0">
+        <nav  aria-label="Page navigation example" style="float: right; margin-top: 10px" >
+          <ul  *ngIf="productList.totalPages > 3" class="pagination">
+            <li  class="page-item"><a class="page-link" [ngClass]="productList.first ? 'disabled': ''"
+                                     (click)="loader(productList.number - 1)">Trang trước</a></li>
+
+            <li class="page-item" [class.active]="productList.pageable.pageNumber < productList.totalPages -1"><a
+              (click)="loader(productList.pageable.pageNumber)"
+              class="page-link"> {{productList.pageable.pageNumber
+            + ((productList.pageable.pageNumber + 1 == productList.totalPages) ? 0 : 1)}}
+            </a></li>
+
+            <li class="page-item"><a
+              class="page-link"> ...
+            </a></li>
+
+            <li class="page-item" [class.active]="productList.totalPages - 1 == productList.pageable.pageNumber"><a
+              (click)="loader(productList.totalPages - 1)" class="page-link"> {{productList.totalPages}}
+            </a></li>
+
+            <li class="page-item"><a class="page-link"
+                                     [ngClass]="productList.number + 1 == productList.totalPages? 'disabled': ''"
+                                     (click)="loader(productList.number + 1)">Trang sau</a></li>
+          </ul>
+
+          <ul class="pagination" *ngIf="productList.totalPages <= 3">
+            <li class="page-item"><a class="page-link" [ngClass]="productList.first ? 'disabled': ''"
+                                     (click)="loader(productList.number - 1)">Trang trước</a></li>
+
+            <li *ngFor="let num of nums" class="page-item" [class.active]="num == productList.pageable.pageNumber"><a
+              (click)="loader(num)" class="page-link"> {{num + 1}}
+            </a></li>
+
+            <li class="page-item"><a class="page-link"
+                                     [ngClass]="productList.number + 1 == productList.totalPages? 'disabled': ''"
+                                     (click)="loader(productList.number + 1)">Trang sau</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>

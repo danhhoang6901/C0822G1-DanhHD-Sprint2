@@ -34,6 +34,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.title.setTitle('Giỏ hàng')
     this.getIdUser()
+    console.log(this.totalPrice)
     this.shareService.getClickEvent().subscribe(next => {
       this.getIdUser()
     })

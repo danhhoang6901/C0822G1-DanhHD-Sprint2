@@ -77,7 +77,6 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-
     public ResponseEntity<?> login(@RequestBody SignInForm signInForm) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInForm.getUsername(), signInForm.getPassword()));

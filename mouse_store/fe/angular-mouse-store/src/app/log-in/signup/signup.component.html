@@ -18,8 +18,8 @@
                   <div class=" mb-4">
                     <label class="form-label" for="username">Tên tài khoản</label>
                     <input type="text" placeholder="Tên đăng nhập" formControlName="username" name="username"
-                           id="username" class="form-control form-control-lg" [ngClass]="(registerForm.controls['userName'].touched)?
-      (registerForm.controls['userName'].invalid || registerForm.errors?.areEqual)?'is-invalid':'is-valid':''">
+                           id="username" class="form-control form-control-lg" [ngClass]="(registerForm.controls['username'].touched)?
+      (registerForm.controls['username'].invalid || registerForm.errors?.areEqual)?'is-invalid':'is-valid':''">
                     <span class="text-danger">{{usernameError}}</span>
                     <span class="text-danger"
                           *ngIf="registerForm.controls.username.hasError('required') &&registerForm.controls.username.touched ">* Không được để trống</span>

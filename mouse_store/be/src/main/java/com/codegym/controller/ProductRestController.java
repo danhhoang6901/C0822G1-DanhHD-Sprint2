@@ -36,9 +36,9 @@ public class ProductRestController {
     private IImageService imageService;
 
     @GetMapping("")
-    public ResponseEntity<List<Product>> getAllProduct(@RequestParam(name = "name", defaultValue = "", required = false)
-                                                               String name) {
-        List<Product> products = productService.getAllProduct(name);
+    public ResponseEntity<Page<Product>> getAllProduct(@RequestParam(name = "name", defaultValue = "", required = false)
+                                                               String name, @PageableDefault(size = 4) Pageable pageable) {
+        Page<Product> products = productService.showListProduct(name, pageable);
         if (products.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

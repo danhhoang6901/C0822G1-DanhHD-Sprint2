@@ -4,8 +4,9 @@
       <div class="col-xl-9">
         <div class="card" style="border-radius: 15px;">
           <div class="card-body">
-            <h1 align="center">Thêm mới thông tin hàng hóa</h1>
-            <form [formGroup]="productForm" (ngSubmit)="editProduct()">
+            <h1 align="center">Chỉnh sửa thông tin hàng hóa</h1>
+            <form [formGroup]="productForm" (ngSubmit)="editProduct(id)">
+              <input type="hidden" formControlName="id" readonly>
               <div class="row align-items-center pt-4 pb-3">
                 <div class="col-md-3 ps-5">
                   <label for="codeProduct" style="font-weight: bold" class="mb-0">Mã sản phẩm:<sup
@@ -39,16 +40,24 @@
                   <input multiple accept=".jpg, .png, .jpeg, .gif, .pdf" (change)="showPreview($event)" required
                          id="image"
                          class="form-control-file" type="file"/>
-                  <input type="text" class="form-control" formControlName="image">
-                </div>
-                <div class="col-md-9 pe-5" style="position: relative;margin-left: 150px">
-                  <input style="display: none" type="text" readonly formControlName="image" class="form-control">
+                                    <input type="text" readonly class="form-control" formControlName="image">
                 </div>
                 <div class="d-flex justify-content-left" style="margin-left: 200px;margin-top: 10px">
-                  <div *ngFor="let img of productList.images,let i = index" style="margin-right: 8px">
+                  <div *ngFor="let img of image,index as i" style="margin-right: 8px">
+                    <div style="position: relative">
+                      <img class="d-block" style="height: 84px" src="{{img.url}}">
+                      <span class="remove_img" (click)="deleteImage(i, img)"
+                            aria-label="Close">
+      <i style="cursor: pointer" class="fa-solid fa-trash icon"></i>
+    </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-left" style="margin-left: 200px;margin-top: 10px">
+                  <div *ngFor="let img of selectedImage,let i = index" style="margin-right: 8px">
                     <div style="position: relative">
                       <img class="d-block" style="height: 84px" src="{{img}}">
-                      <span class="remove_img" (click)="deleteImage(i)"
+                      <span class="remove_img" (click)="deleteImageNew(i)"
                             aria-label="Close">
       <i style="cursor: pointer" class="fa-solid fa-trash icon"></i>
     </span>
@@ -156,7 +165,7 @@
                 </div>
               </div>
               <div align="center" class="px-5 py-4">
-                <button type="submit" class="btn btn-primary m-4 w-25">Thêm mới</button>
+                <button type="submit" class="btn btn-primary m-4 w-25">Chỉnh sửa</button>
                 <button style="margin-left: 10px" type="button" class="btn btn-secondary m-4 w-25"
                         (click)="cancel()">
                   Hủy
